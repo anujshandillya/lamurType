@@ -42,10 +42,6 @@ Thumbs.db
 # Test cache
 /tmp/
 
-# Environment files
-.env
-.env.*
-
 .git
 .gitignore
 Dockerfile
