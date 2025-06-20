@@ -84,3 +84,19 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{"message": "Logout successful"})
 }
+
+func GetCurrentUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	userId := r.Header.Get("user_id")
+	user, err := helpers.GetUserById(userId)
+	if err != nil {
+		http.Error(w, "User not found", http.StatusNotFound)
+		return
+	}
+	json.NewEncoder(w).Encode(map[string]any{
+		"_id":        user.ID.Hex(),
+		"first_name": user.FirstName,
+		"last_name":  user.LastName,
+		"email":      user.Email,
+	})
+}

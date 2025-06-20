@@ -25,7 +25,7 @@ type User struct {
 	LastName      string        `json:"last_name" bson:"last_name"`
 	Email         string        `json:"email" bson:"email"`
 	EmailVerified bson.DateTime `json:"email_verified" bson:"email_verified"`
-	Image         Image         `json:"image,omitempty" bson:"image,omitempty"`
+	Image         Image         `json:"image" bson:"image"`
 	Password      string        `json:"password" bson:"password"`
 	Sessions      []Sessions    `json:"sessions,omitempty" bson:"sessions,omitempty"`
 	Leaderboard   []Leaderboard `json:"leaderboard,omitempty" bson:"leaderboard,omitempty"`

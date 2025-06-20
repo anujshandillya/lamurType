@@ -71,6 +71,19 @@ func GetUserByEmail(email string) (models.User, error) {
 	return user, nil
 }
 
+func GetUserById(userId string) (models.User, error) {
+	var user models.User
+	userObjID, err := bson.ObjectIDFromHex(userId)
+	if err != nil {
+		return models.User{}, err
+	}
+	err = models.UserCollection.FindOne(context.TODO(), bson.M{"_id": userObjID}).Decode(&user)
+	if err != nil {
+		return models.User{}, err
+	}
+	return user, nil
+}
+
 func CreateUser(user models.User) (*mongo.InsertOneResult, error) {
 	ifUserExists := FindUserByEmail(user.Email)
 	if !ifUserExists {
