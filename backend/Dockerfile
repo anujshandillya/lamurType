@@ -1,11 +1,15 @@
 FROM golang:1.24-alpine
 
-WORKDIR /app-b
+WORKDIR /app
 
 RUN go install github.com/air-verse/air@latest
 
-COPY go.mod go.sum ./
-RUN go mod downloadAdd commentMore actions
+# Copy go.mod first
+COPY go.mod ./
+# Initialize the go.sum file if it doesn't exist
+RUN touch go.sum
+# Download dependencies
+RUN go mod download
 
 COPY . .
 
