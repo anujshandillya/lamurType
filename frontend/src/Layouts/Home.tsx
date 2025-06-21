@@ -1,23 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Button from '../components/Button'
 import { useRouter } from '../hooks/use-router'
 import Iconify from '../components/Iconify'
 import Keyboard from '../components/Keyboard'
 import ChatBox from '../components/ChatBox/ChatBox'
+import Drawer from '../components/Drawer'
+import { useBoolean } from '../hooks/use-boolean'
 
 const Home = () => {
   const { router } = useRouter()
+  const drawer = useBoolean(false)
+
+  useEffect(() => {
+    console.log('Drawer state changed:', drawer.value)
+  }, [drawer.value])
 
   return (
     <section>
+      <Button onClick={drawer.onTrue} className='fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-fg px-4 py-2 text-white shadow-lg hover:bg-fg/90 transition-colors duration-200'>
+        <Iconify icon="mdi:chat" />
+      </Button>
           <div className='layout flex flex-col items-center gap-8 pt-8 text-center'>
-            {/* <div className='relative flex h-8 w-full max-w-[800px] items-center justify-between'>
+            <Drawer open={drawer.value} onClose={drawer.onFalse} position='right' size='md' title='Chat'>
               <ChatBox
-                className='right-3 w-[calc(100%+2rem)] sm:right-2'
-                label='public chat'
-                // isRoomChat={true}
+                className='h-[80vh] w-full max-w-[400px]'
+                label='Public Chat'
               />
-            </div> */}
+            </Drawer>
 
             <div className='aspect-video w-full max-w-[450px] overflow-hidden rounded-lg ring-4 ring-fg ring-offset-4 ring-offset-bg'>
               <iframe
