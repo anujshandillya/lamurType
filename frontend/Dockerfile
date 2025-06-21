@@ -13,8 +13,18 @@ RUN yarn install
 # Copy the rest of the application files
 COPY . .
 
+# Install md5sum for file watching
+RUN apk add --no-cache coreutils
+
+# Copy and make the entrypoint script executable
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 # Expose the development port
 EXPOSE 5173
 
+# Set the entrypoint script
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+
 # Start the development server
-CMD ["yarn", "dev"]
+CMD ["yarn", "vite", "--host"]
