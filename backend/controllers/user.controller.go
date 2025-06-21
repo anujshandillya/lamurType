@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 
 	"github.com/anujshandillya/lamurTypeServer/helpers"
 	"github.com/anujshandillya/lamurTypeServer/models"
@@ -75,12 +76,41 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	helpers.SetCookie("token", sessionToken, w)
 	helpers.SetCookie("userId", foundUser.ID.Hex(), w)
 
-	json.NewEncoder(w).Encode(map[string]string{"message": "Login successful", "session_token": sessionToken})
+	// Return the token in the response for API clients that prefer using Bearer token
+	json.NewEncoder(w).Encode(map[string]string{
+		"message": "Login successful",
+		"token":   sessionToken,
+		"user_id": foundUser.ID.Hex(),
+	})
 }
 
 func Logout(w http.ResponseWriter, r *http.Request) {
+	// Get token from cookie or header to invalidate it
+	var tokenStr string
+
+	// Try to get token from cookie first
+	cookie, err := r.Cookie("token")
+	if err == nil {
+		tokenStr = cookie.Value
+	}
+
+	// If no token in cookie, check Authorization header for Bearer token
+	if tokenStr == "" {
+		authHeader := r.Header.Get("Authorization")
+		if authHeader != "" && strings.HasPrefix(authHeader, "Bearer ") {
+			tokenStr = strings.TrimPrefix(authHeader, "Bearer ")
+		}
+	}
+
+	// If a token was found, invalidate it
+	if tokenStr != "" {
+		helpers.InvalidateToken(tokenStr)
+	}
+
+	// Clear cookies
 	helpers.UnsetCookie("token", w)
 	helpers.UnsetCookie("userId", w)
+
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{"message": "Logout successful"})
 }

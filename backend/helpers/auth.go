@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"sync"
 	"time"
 
 	"github.com/anujshandillya/lamurTypeServer/lib"
@@ -99,4 +100,30 @@ func CreateUser(user models.User) (*mongo.InsertOneResult, error) {
 		return newUser, nil
 	}
 	return nil, fmt.Errorf("user with email %s already exists", user.Email)
+}
+
+// Global in-memory token blacklist
+// In production, this should be replaced with Redis or a database
+var invalidatedTokens = make(map[string]time.Time)
+var tokenMutex = &sync.Mutex{}
+
+func InvalidateToken(token string) {
+	tokenMutex.Lock()
+	defer tokenMutex.Unlock()
+	invalidatedTokens[token] = time.Now().Add(15 * 24 * time.Hour)
+}
+
+func IsTokenInvalid(token string) bool {
+	tokenMutex.Lock()
+	defer tokenMutex.Unlock()
+
+	now := time.Now()
+	for t, expiry := range invalidatedTokens {
+		if now.After(expiry) {
+			delete(invalidatedTokens, t)
+		}
+	}
+
+	_, exists := invalidatedTokens[token]
+	return exists
 }
