@@ -1,0 +1,92 @@
+import React from 'react'
+import Button from '../components/Button'
+import { useRouter } from '../hooks/use-router'
+import Iconify from '../components/Iconify'
+import Keyboard from '../components/Keyboard'
+import ChatBox from '../components/ChatBox/ChatBox'
+
+const Home = () => {
+  const { router } = useRouter()
+
+  return (
+    <section>
+          <div className='layout flex flex-col items-center gap-8 pt-8 text-center'>
+            {/* <div className='relative flex h-8 w-full max-w-[800px] items-center justify-between'>
+              <ChatBox
+                className='right-3 w-[calc(100%+2rem)] sm:right-2'
+                label='public chat'
+                // isRoomChat={true}
+              />
+            </div> */}
+
+            <div className='aspect-video w-full max-w-[450px] overflow-hidden rounded-lg ring-4 ring-fg ring-offset-4 ring-offset-bg'>
+              <iframe
+                src='https://www.youtube.com/embed/nnM9h7twXg8?autoplay=1&mute=1&loop=1&color=white&controls=0&modestbranding=1&playsinline=1&rel=0&enablejsapi=1&playlist=nnM9h7twXg8'
+                title='Monkeytype Clone'
+                frameBorder='0'
+                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                allowFullScreen
+                style={{
+                  width: '300%',
+                  height: '100%',
+                  marginLeft: '-100%',
+                  zIndex: 50,
+                }}
+              ></iframe>
+            </div>
+            {/* <FormProvider {...methods}>
+              <Input
+                placeholder='enter your nickname'
+                autoComplete='off'
+                name='nickname'
+                id='nickname'
+                maxLength={14}
+                defaultValue={localStorage?.getItem('nickname') || ''}
+                onBlur={(e) => {
+                  if (!e.target.value) return;
+                  dispatch({ type: 'SET_NICKNAME', payload: e.target.value });
+                }}
+                className='text-center'
+              />
+            </FormProvider> */}
+            <div className='flex items-center gap-4'>
+              <Button
+                onClick={() => router.push('/solo')}
+                className='flex items-center gap-2'
+              >
+                <Iconify icon="mdi:account" />
+                Play Solo
+              </Button>
+              <div>
+                <Button
+                  onClick={() => router.push('/multiplayer')}
+                  className='flex items-center gap-2'
+                >
+                  <Iconify icon="mdi:account-multiple" />
+                  Multiplayer
+                </Button>
+              </div>
+            </div>
+
+            <div className='flex flex-col items-center justify-center gap-2 font-primary'>
+              <div className='flex items-center space-x-2 text-sm'>
+                <Keyboard className='bg-white'>tab</Keyboard>
+                <span className='text-hl'> + </span>
+                <Keyboard className='bg-white'>enter</Keyboard>
+                <span className='text-hl'> - restart test </span>
+              </div>
+              <div className='flex items-center space-x-2 text-sm'>
+                <Keyboard className='bg-white'>ctrl/cmd</Keyboard>
+                <span className='text-hl'> + </span>
+                <Keyboard className='bg-white'>k</Keyboard>
+                <span className='text-hl'> or </span>
+                <Keyboard className='bg-white'>p</Keyboard>
+                <span className='text-hl'> - command palette </span>
+              </div>
+            </div>
+          </div>
+        </section>
+  )
+}
+
+export default Home
