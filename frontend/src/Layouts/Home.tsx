@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import Button from '../components/Button'
+import Button from '../components/shared/Button'
 import { useRouter } from '../hooks/use-router'
 import Iconify from '../components/Iconify'
 import Keyboard from '../components/Keyboard'
 import ChatBox from '../components/ChatBox/ChatBox'
-import Drawer from '../components/Drawer'
+import Drawer from '../components/shared/Drawer'
 import { useBoolean } from '../hooks/use-boolean'
 
 const Home = () => {
