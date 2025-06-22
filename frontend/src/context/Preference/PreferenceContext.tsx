@@ -4,9 +4,23 @@ import { type ProviderState } from "./types";
 
 const PreferenceContext = createContext<ProviderState>({} as ProviderState);
 
+// Function to update shadcn theme variables
+const updateShadcnTheme = (theme: string) => {
+  const root = document.documentElement;
+  const bgVar = `--color-${theme}-bg`;
+  const fontVar = `--color-${theme}-font`;
+  const hlVar = `--color-${theme}-hl`;
+  const fgVar = `--color-${theme}-fg`;
+
+  root.style.setProperty('--shadcn-bg', `var(${bgVar})`);
+  root.style.setProperty('--shadcn-font', `var(${fontVar})`);
+  root.style.setProperty('--shadcn-hl', `var(${hlVar})`);
+  root.style.setProperty('--shadcn-fg', `var(${fgVar})`);
+};
+
 export default function PreferenceProvider({ children }: { children: React.ReactNode }) {
     const [preference, dispatch] = useReducer(reducer, {
-        theme: 'default',
+        theme: 'plain',
         fontFamily: 'poppins',
         isOpen: false,
         zenMode: false,
@@ -29,6 +43,11 @@ export default function PreferenceProvider({ children }: { children: React.React
             if(zenMode) dispatch({ type: 'SET_ZEN_MODE', payload: zenMode });
         }
     }, [])
+
+    // Update shadcn theme when preference.theme changes
+    useEffect(() => {
+        updateShadcnTheme(preference.theme);
+    }, [preference.theme]);
 
     return (
         <PreferenceContext.Provider value={{ preferences: preference, dispatch }}>

@@ -5,12 +5,6 @@ const commands = [
     contents: [
       {
         icon: '',
-        commandName: 'default',
-        contents: [],
-        description: '- black, light-gray, and blue',
-      },
-      {
-        icon: '',
         commandName: 'plain',
         contents: [],
         description: '- black, gray, and white',
@@ -23,7 +17,7 @@ const commands = [
       },
       {
         icon: '',
-        commandName: 'snowy-night',
+        commandName: 'snowynight',
         contents: [],
         description: '- black, dark-gray, and skyblue',
       },
@@ -47,7 +41,7 @@ const commands = [
       },
       {
         icon: '',
-        commandName: 'green-tea',
+        commandName: 'greentea',
         contents: [],
         description: '- white, green, and yellowish-green',
       },
@@ -77,7 +71,7 @@ const commands = [
       },
       {
         icon: '',
-        commandName: 'eye-pain',
+        commandName: 'eyepain',
         contents: [],
         description: "- you probably won't like this",
       },
@@ -171,6 +165,12 @@ const commands = [
       {
         icon: '',
         commandName: 'inter',
+        contents: [],
+        description: '- The five boxing wizards jump quickly.',
+      },
+      {
+        icon: '',
+        commandName: 'space-mono',
         contents: [],
         description: '- The five boxing wizards jump quickly.',
       },
