@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Iconify from "../Iconify";
 import { useForm } from "react-hook-form";
-import FormProvider from "../hook-form/formProvider";
+import FormProvider from "../hook-form/FormProvider";
 import RHFTextField from "../hook-form/RHFTextField";
 
 const ChatInput = ({ isPublic }: { isPublic: boolean }) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import clsx from 'clsx';
-import Iconify from './Iconify';
+import Iconify from '../Iconify';
 
 interface DrawerProps {
   /**
