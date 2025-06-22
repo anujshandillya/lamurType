@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import Iconify from '../Iconify';
+import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 
 interface DrawerProps {
   /**
@@ -42,6 +43,7 @@ interface DrawerProps {
    * Whether to show overlay
    */
   hasOverlay?: boolean;
+  theme?: string;
 }
 
 export default function Drawer({
@@ -53,6 +55,7 @@ export default function Drawer({
   children,
   className,
   hasOverlay = true,
+  theme
 }: DrawerProps) {
   const [isVisible, setIsVisible] = useState(open);
   const drawerRef = useRef<HTMLDivElement>(null);
@@ -134,7 +137,7 @@ export default function Drawer({
         ref={drawerRef}
         className={clsx(
             className,
-          'fixed z-50 bg-black shadow-lg flex flex-col transition-transform duration-300 ease-in-out',
+          `fixed z-50 bg-${theme}-bg text-${theme}-font shadow-lg flex flex-col transition-transform duration-300 ease-in-out`,
           positionStyles.drawer
         )}
         style={{

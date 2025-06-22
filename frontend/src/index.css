@@ -1,216 +1,171 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+@theme {
+  --font-poppins: Poppins, sans-serif;
+  --font-space-mono: "Space Mono", monospace;
+  --font-inter: Inter, sans-serif;
+  --font-roboto: Roboto, sans-serif;
+  --font-lato: Lato, sans-serif;
+  --font-open-sans: "Open Sans", sans-serif;
+  --font-montserrat: Montserrat, sans-serif;
+  --font-raleway: Raleway, sans-serif;
+  --font-ubuntu: Ubuntu, sans-serif;
+  --font-chakra-petch: "Chakra Petch", monospace;
 
-.plain {
-  --color-bg: 238 238 238; /* background color */
-  --color-font: 127 132 135; /* font color */
-  --color-hl: 65 63 66; /* caret, wrong characters, timer, selected and onhover colors */
-  --color-fg: 75 75 75; /* correctly typed characters */
+  /* shadcn/ui design tokens - will be dynamically updated */
+  --color-background: var(--shadcn-bg);
+  --color-foreground: var(--shadcn-font);
+  --color-card: var(--shadcn-bg);
+  --color-card-foreground: var(--shadcn-font);
+  --color-popover: var(--shadcn-bg);
+  --color-popover-foreground: var(--shadcn-font);
+  --color-primary: var(--shadcn-font);
+  --color-primary-foreground: var(--shadcn-bg);
+  --color-secondary: var(--shadcn-hl);
+  --color-secondary-foreground: var(--shadcn-font);
+  --color-muted: var(--shadcn-bg);
+  --color-muted-foreground: var(--shadcn-hl);
+  --color-accent: var(--shadcn-fg);
+  --color-accent-foreground: var(--shadcn-font);
+  --color-destructive: var(--shadcn-fg);
+  --color-destructive-foreground: var(--shadcn-hl);
+  --color-border: var(--shadcn-hl);
+  --color-input: var(--shadcn-bg);
+  --color-ring: var(--shadcn-font);
+  --radius: 0.5rem;
+
+  --color-plain-bg: oklch(0.933 0.001 0);
+  --color-plain-font: oklch(0.533 0.008 197.6);
+  --color-plain-hl: oklch(0.371 0.006 314.75);
+  --color-plain-fg: oklch(0.413 0 0);
+  
+  --color-winter-bg: oklch(0.525 0.109 237.66);
+  --color-winter-font: oklch(0.857 0.025 220.5);
+  --color-winter-hl: oklch(0.925 0.025 180.2);
+  --color-winter-fg: oklch(0.975 0.005 180.2);
+
+  --color-snowynight-bg: oklch(0.201 0.008 180.2);
+  --color-snowynight-font: oklch(0.371 0.025 180.2);
+  --color-snowynight-hl: oklch(0.801 0.025 180.2);
+  --color-snowynight-fg: oklch(0.961 0.005 180.2);
+
+  --color-vintage-bg: oklch(0.481 0.075 160.5);
+  --color-vintage-font: oklch(0.701 0.045 140.2);
+  --color-vintage-hl: oklch(0.925 0.015 85.3);
+  --color-vintage-fg: oklch(0.861 0.025 85.3);
+
+  --color-vampire-bg: oklch(0.113 0 0);
+  --color-vampire-font: oklch(0.301 0 0);
+  --color-vampire-hl: oklch(0.785 0 0);
+  --color-vampire-fg: oklch(0.481 0.175 25.5);
+
+  --color-bubblegum-bg: oklch(0.321 0.075 280.5);
+  --color-bubblegum-font: oklch(0.761 0.045 300.2);
+  --color-bubblegum-hl: oklch(0.881 0.025 340.2);
+  --color-bubblegum-fg: oklch(0.901 0.125 140.2);
+
+  --color-greentea-bg: oklch(0.481 0.075 140.2);
+  --color-greentea-font: oklch(0.761 0.045 120.2);
+  --color-greentea-hl: oklch(0.961 0.025 120.2);
+  --color-greentea-fg: oklch(0.901 0.085 100.2);
+
+  --color-wood-bg: oklch(0.261 0.015 60.2);
+  --color-wood-font: oklch(0.371 0.015 60.2);
+  --color-wood-hl: oklch(0.801 0.015 60.2);
+  --color-wood-fg: oklch(0.601 0.025 60.2);
+
+  --color-beach-bg: oklch(0.481 0.175 220.5);
+  --color-beach-font: oklch(0.681 0.125 220.5);
+  --color-beach-hl: oklch(0.961 0.005 0);
+  --color-beach-fg: oklch(0.841 0.125 85.3);
+
+  --color-halloween-bg: oklch(0.081 0.005 60.2);
+  --color-halloween-font: oklch(0.281 0.015 300.2);
+  --color-halloween-hl: oklch(0.785 0 0);
+  --color-halloween-fg: oklch(0.641 0.175 45.2);
+  
+  --color-botanical-bg: oklch(0.521 0.075 140.2);
+  --color-botanical-font: oklch(0.641 0.045 140.2);
+  --color-botanical-hl: oklch(0.881 0.085 120.2);
+  --color-botanical-fg: oklch(0.941 0.005 85.3);
+
+  --color-eyepain-bg: oklch(0.281 0.275 280.5);
+  --color-eyepain-font: oklch(0.761 0.275 120.2);
+  --color-eyepain-hl: oklch(0.481 0.275 25.5);
+  --color-eyepain-fg: oklch(0.481 0.275 320.5);
 }
 
-.winter {
-  --color-bg: 21 114 161;
-  --color-font: 196 221 255;
-  --color-hl: 184 255 249;
-  --color-fg: 239 255 253;
-}
-
-.snowy-night {
-  --color-bg: 44 51 51;
-  --color-font: 57 91 100;
-  --color-hl: 165 201 202;
-  --color-fg: 231 246 242;
-}
-
-.vintage {
-  --color-bg: 55 125 113;
-  --color-font: 148 180 159;
-  --color-hl: 247 236 222;
-  --color-fg: 233 218 193;
-}
-
-.vampire {
-  --color-bg: 28 28 28;
-  --color-font: 76 76 76;
-  --color-hl: 200 200 200;
-  --color-fg: 179 48 48;
-}
-
-.bubblegum {
-  --color-bg: 77 76 125;
-  --color-font: 200 182 226;
-  --color-hl: 233 213 218;
-  --color-fg: 193 255 207;
-}
-
-.green-tea {
-  --color-bg: 85 124 85;
-  --color-font: 166 207 152;
-  --color-hl: 242 255 233;
-  --color-fg: 227 243 172;
-}
-
-.wood {
-  --color-bg: 74 64 58;
-  --color-font: 104 94 88;
-  --color-hl: 208 201 192;
-  --color-fg: 160 147 125;
-}
-
-.beach {
-  --color-bg: 0 120 170;
-  --color-font: 58 180 242;
-  --color-hl: 246 246 246;
-  --color-fg: 242 223 58;
-}
-
-.halloween {
-  --color-bg: 27 26 23;
-  --color-font: 74 69 76;
-  --color-hl: 201 201 201;
-  --color-fg: 245 136 64;
-}
-
-.botanical {
-  --color-bg: 75 134 115;
-  --color-font: 130 162 132;
-  --color-hl: 201 235 168;
-  --color-fg: 242 240 233;
-}
-
-.eye-pain {
-  --color-bg: 34 0 255;
-  --color-font: 163 255 0;
-  --color-hl: 255 0 0;
-  --color-fg: 255 0 231;
-}
-
-.inter {
-  --font-family: 'Inter';
-}
-
-.poppins {
-  --font-family: 'Poppins';
-}
-
-.chakra-petch {
-  --font-family: 'Chakra Petch';
-}
-
-@theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
-
+/* Default shadcn theme values (will be updated by JavaScript) */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --shadcn-bg: var(--color-plain-bg);
+  --shadcn-font: var(--color-plain-font);
+  --shadcn-hl: var(--color-plain-hl);
+  --shadcn-fg: var(--color-plain-fg);
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
+/* Theme utility classes */
+.bg-default-bg { background-color: oklch(0.9491 0 0); }
+.text-default-font { color: oklch(0.5566 0.0945 197.6); }
+.text-default-hl { color: oklch(0.3707 0.0057 314.75); }
+.text-default-fg { color: oklch(0.4128 0 0); }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
+.bg-plain-bg { background-color: var(--color-plain-bg); }
+.text-plain-font { color: var(--color-plain-font); }
+.text-plain-hl { color: var(--color-plain-hl); }
+.text-plain-fg { color: var(--color-plain-fg); }
+
+.bg-winter-bg { background-color: var(--color-winter-bg); }
+.text-winter-font { color: var(--color-winter-font); }
+.text-winter-hl { color: var(--color-winter-hl); }
+.text-winter-fg { color: var(--color-winter-fg); }
+
+.bg-snowynight-bg { background-color: var(--color-snowynight-bg); }
+.text-snowynight-font { color: var(--color-snowynight-font); }
+.text-snowynight-hl { color: var(--color-snowynight-hl); }
+.text-snowynight-fg { color: var(--color-snowynight-fg); }
+
+.bg-vintage-bg { background-color: var(--color-vintage-bg); }
+.text-vintage-font { color: var(--color-vintage-font); }
+.text-vintage-hl { color: var(--color-vintage-hl); }
+.text-vintage-fg { color: var(--color-vintage-fg); }
+
+.bg-vampire-bg { background-color: var(--color-vampire-bg); }
+.text-vampire-font { color: var(--color-vampire-font); }
+.text-vampire-hl { color: var(--color-vampire-hl); }
+.text-vampire-fg { color: var(--color-vampire-fg); }
+
+.bg-bubblegum-bg { background-color: var(--color-bubblegum-bg); }
+.text-bubblegum-font { color: var(--color-bubblegum-font); }
+.text-bubblegum-hl { color: var(--color-bubblegum-hl); }
+.text-bubblegum-fg { color: var(--color-bubblegum-fg); }
+
+.bg-greentea-bg { background-color: var(--color-greentea-bg); }
+.text-greentea-font { color: var(--color-greentea-font); }
+.text-greentea-hl { color: var(--color-greentea-hl); }
+.text-greentea-fg { color: var(--color-greentea-fg); }
+
+.bg-wood-bg { background-color: var(--color-wood-bg); }
+.text-wood-font { color: var(--color-wood-font); }
+.text-wood-hl { color: var(--color-wood-hl); }
+.text-wood-fg { color: var(--color-wood-fg); }
+
+.bg-beach-bg { background-color: var(--color-beach-bg); }
+.text-beach-font { color: var(--color-beach-font); }
+.text-beach-hl { color: var(--color-beach-hl); }
+.text-beach-fg { color: var(--color-beach-fg); }
+
+.bg-halloween-bg { background-color: var(--color-halloween-bg); }
+.text-halloween-font { color: var(--color-halloween-font); }
+.text-halloween-hl { color: var(--color-halloween-hl); }
+.text-halloween-fg { color: var(--color-halloween-fg); }
+
+.bg-botanical-bg { background-color: var(--color-botanical-bg); }
+.text-botanical-font { color: var(--color-botanical-font); }
+.text-botanical-hl { color: var(--color-botanical-hl); }
+.text-botanical-fg { color: var(--color-botanical-fg); }
+
+.bg-eyepain-bg { background-color: var(--color-eyepain-bg); }
+.text-eyepain-font { color: var(--color-eyepain-font); }
+.text-eyepain-hl { color: var(--color-eyepain-hl); }
+.text-eyepain-fg { color: var(--color-eyepain-fg); }

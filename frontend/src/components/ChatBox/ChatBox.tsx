@@ -10,6 +10,7 @@ type ChatBoxProps = {
   className?: React.HTMLAttributes<HTMLElement>["className"];
   label?: string;
   isRoomChat?: boolean;
+  theme?: string;
 };
 
 // import { useChatContext } from '@/context/Chat/ChatContext';
@@ -20,6 +21,7 @@ export default function ChatBox({
   className,
   label,
   isRoomChat,
+  theme
 }: ChatBoxProps) {
   //   const {
   //     room: {
@@ -131,6 +133,7 @@ export default function ChatBox({
             value={chat.value}
             isYou={chat.id === id}
             type={chat.type === "notification" ? "notification" : "message"}
+            theme={theme}
           />
         ))}
         {showNotification && (
@@ -138,6 +141,7 @@ export default function ChatBox({
             type="notification"
             value={isPublic ? "joined" : "left"}
             isYou={true}
+            theme={theme}
           />
         )}
       </div>

@@ -37,10 +37,10 @@ const ChatInput = ({ isPublic }: { isPublic: boolean }) => {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex h-12 w-full items-center justify-between border-t border-fg bg-bg px-2 sm:px-4">
+      <div className="flex h-12 w-full items-center justify-between border-t px-2 sm:px-4">
         <RHFTextField name="message" helperText={values.message} />
         <button
-          className="relative h-full border-b border-fg bg-bg px-2 text-sm font-normal"
+          className="relative h-full border-b px-2 text-sm font-normal"
           type="submit"
         >
           <span className="flex items-center text-fg transition-opacity duration-200 hover:text-opacity-80 active:text-opacity-70">
