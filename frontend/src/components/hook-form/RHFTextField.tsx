@@ -4,10 +4,12 @@ import { useFormContext, Controller } from 'react-hook-form';
 
 type RHFTextFieldProps = {
   name: string;
-  helperText: React.ReactNode;
+  helperText?: React.ReactNode;
+  label?: string;
+  type?: string;
 };
 
-export default function RHFTextField({ name, helperText, ...other }: RHFTextFieldProps) {
+export default function RHFTextField({ name, helperText, label, type = "text", ...other }: RHFTextFieldProps) {
   const { control } = useFormContext();
 
   return (
@@ -15,13 +17,19 @@ export default function RHFTextField({ name, helperText, ...other }: RHFTextFiel
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <input
-            className='w-full rounded-md border border-fg bg-bg px-2 py-1 text-sm font-normal text-fg placeholder:text-fg focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500'
-          placeholder="Type your message..."
-          {...field}
-          value={typeof field.value === 'number' && field.value === 0 ? '' : field.value}
-          {...other}
-        />
+        <div className="space-y-1">
+          <input
+            className='w-full rounded-lg border border-fg/20 bg-bg/50 backdrop-blur-sm px-4 py-3 text-sm font-normal text-fg placeholder:text-hl/60 focus:border-fg/40 focus:outline-none focus:ring-2 focus:ring-fg/20 transition-all duration-200'
+            placeholder={label}
+            type={type}
+            {...field}
+            value={typeof field.value === 'number' && field.value === 0 ? '' : field.value}
+            {...other}
+          />
+          {error && (
+            <p className="text-xs text-red-500/80">{error.message}</p>
+          )}
+        </div>
       )}
     />
   );
