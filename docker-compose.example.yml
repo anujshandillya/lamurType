@@ -47,6 +47,13 @@ services:
       timeout: 3s
       retries: 3
 
+  socket:
+    build: ./socket
+    ports:
+      - "4000:4000"
+    networks:
+      - app-network
+
 volumes:
   go-modules:
     name: lamur-go-modules
