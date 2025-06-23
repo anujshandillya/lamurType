@@ -19,13 +19,16 @@ var authRouter = Router.PathPrefix("/api/auth").Subrouter()
 var leaderboardRouter = Router.PathPrefix("/api/leaderboard").Subrouter()
 
 func init() {
-	Router.HandleFunc("/api/hello", middleware.VerifyJWT(helloAPI)).Methods("GET")
+	// Apply CORS middleware to all routes
+	Router.Use(mux.CORSMethodMiddleware(Router))
 
-	authRouter.HandleFunc("/register", controllers.Register).Methods("POST")
-	authRouter.HandleFunc("/login", controllers.Login).Methods("POST")
-	authRouter.HandleFunc("/logout", middleware.VerifyJWT(controllers.Logout)).Methods("POST")
-	authRouter.HandleFunc("/me", middleware.VerifyJWT(controllers.GetCurrentUser)).Methods("GET")
+	Router.HandleFunc("/api/hello", middleware.CORS(middleware.VerifyJWT(helloAPI))).Methods("GET", "OPTIONS")
 
-	leaderboardRouter.HandleFunc("/", middleware.VerifyJWT(controllers.HandleLeaderboard)).Methods("GET", "POST")
-	leaderboardRouter.HandleFunc("/profile", middleware.VerifyJWT(controllers.GetLeaderboardProfile)).Methods("GET")
+	authRouter.HandleFunc("/register", middleware.CORS(controllers.Register)).Methods("POST", "OPTIONS")
+	authRouter.HandleFunc("/login", middleware.CORS(controllers.Login)).Methods("POST", "OPTIONS")
+	authRouter.HandleFunc("/logout", middleware.CORS(middleware.VerifyJWT(controllers.Logout))).Methods("POST", "OPTIONS")
+	authRouter.HandleFunc("/me", middleware.CORS(middleware.VerifyJWT(controllers.GetCurrentUser))).Methods("GET", "OPTIONS")
+
+	leaderboardRouter.HandleFunc("/", middleware.CORS(middleware.VerifyJWT(controllers.HandleLeaderboard))).Methods("GET", "POST", "OPTIONS")
+	leaderboardRouter.HandleFunc("/profile", middleware.CORS(middleware.VerifyJWT(controllers.GetLeaderboardProfile))).Methods("GET", "OPTIONS")
 }
