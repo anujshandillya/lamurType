@@ -124,9 +124,10 @@ func GetCurrentUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	json.NewEncoder(w).Encode(map[string]any{
-		"_id":        user.ID.Hex(),
-		"first_name": user.FirstName,
-		"last_name":  user.LastName,
-		"email":      user.Email,
+		"_id":             user.ID.Hex(),
+		"first_name":      user.FirstName,
+		"last_name":       user.LastName,
+		"email":           user.Email,
+		"isAuthenticated": true,
 	})
 }
