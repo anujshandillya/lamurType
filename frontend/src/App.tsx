@@ -6,6 +6,9 @@ import Auth from "./Layouts/Auth";
 import Home from "./Layouts/Home";
 import Main from "./Layouts/Main";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import SoloPage from "./Layouts/SoloPage";
+import useProfile from "./hooks/use-profile";
+import { useEffect } from "react";
 
 function App() {
   return (
@@ -18,6 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/auth/login" element={<Auth type="login" />} />
           <Route path="/auth/register" element={<Auth type="register" />} />
+          <Route path="/solo" element={<SoloPage />} />
         </Routes>
       </Main>
     </Router>
