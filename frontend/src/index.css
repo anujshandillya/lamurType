@@ -38,12 +38,12 @@
   --color-plain-bg: oklch(0.933 0.001 0);
   --color-plain-font: oklch(0.533 0.008 197.6);
   --color-plain-hl: oklch(0.371 0.006 314.75);
-  --color-plain-fg: oklch(0.413 0 0);
+  --color-plain-fg: oklch(0.5853 0.2269 21);
   
   --color-winter-bg: oklch(0.525 0.109 237.66);
   --color-winter-font: oklch(0.857 0.025 220.5);
   --color-winter-hl: oklch(0.925 0.025 180.2);
-  --color-winter-fg: oklch(0.975 0.005 180.2);
+  --color-winter-fg: oklch(0.8207 0.0908 176.87);
 
   --color-snowynight-bg: oklch(0.201 0.008 180.2);
   --color-snowynight-font: oklch(0.371 0.025 180.2);
