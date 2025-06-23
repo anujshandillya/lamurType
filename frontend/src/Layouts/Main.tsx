@@ -19,7 +19,6 @@ const Main = ({ children }: MainProps) => {
 
   useEffect(() => {
     if (user?.isAuthenticated) {
-      router.replace('/')
       dispatch({ type: 'SET_USER', payload: user })
     }
   }, [user])

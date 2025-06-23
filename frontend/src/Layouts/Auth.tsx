@@ -1,4 +1,8 @@
 import Form from "@/components/Auth/Form";
+import { useAuthContext } from "@/context/User/UserAuthContext";
+import useProfile from "@/hooks/use-profile";
+import { useRouter } from "@/hooks/use-router";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 type AuthProps = {
@@ -6,6 +10,15 @@ type AuthProps = {
 };
 
 export default function Auth({ type }: AuthProps) {
+  const { router } = useRouter()
+  const { user, dispatch } = useAuthContext()
+
+  useEffect(() => {
+    if (user.isAuthenticated) {
+      dispatch({ type: 'SET_USER', payload: user })
+      router.replace('/')
+    }
+  }, [user.isAuthenticated])
   return (
     <div className="min-h-screen bg-gradient-to-br from-bg via-bg to-hl/20 flex items-center justify-center p-4">
       {/* Background decorative elements */}

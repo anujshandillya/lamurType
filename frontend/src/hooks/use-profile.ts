@@ -8,7 +8,8 @@ type UserPayload = {
     first_name: string;
     last_name: string;
     email: string;
-    createdAt: string;
+    // createdAt: string;
+    isAuthenticated: boolean;
 };
 
 type ProfileStatsPayload = {
