@@ -6,7 +6,7 @@ export const ENDPOINTS = {
         logout: '/auth/logout',
     },
     leaderboard: {
-        root: '/leaderboard',
+        root: '/leaderboard/',
         profile: '/leaderboard/profile',
     },
 }
