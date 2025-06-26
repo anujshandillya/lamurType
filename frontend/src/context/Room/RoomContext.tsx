@@ -50,7 +50,7 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
       
       const newUsername = nickname || 
         (userProfile.first_name && userProfile.last_name 
-          ? `${userProfile.first_name}${userProfile.last_name}`
+          ? `${userProfile.first_name} ${userProfile.last_name}`
           : uniqueNamesGenerator({
               dictionaries: [animals],
               style: 'lowerCase',

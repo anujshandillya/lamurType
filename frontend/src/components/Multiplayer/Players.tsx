@@ -1,0 +1,100 @@
+import clsx from 'clsx';
+
+import { useRoomContext } from '@/context/Room/RoomContext';
+import Skeleton from './Skeleton';
+import Iconify from '../Iconify';
+
+export default function Players({theme}: {theme: string}) {
+  const {
+    room: {
+      user: { id },
+      players,
+      isPlaying,
+      winner,
+    },
+  } = useRoomContext();
+
+  console.log("players:",players);
+
+  return (
+    <div
+      className={clsx(
+        `z-20 -mt-16 mb-24 flex w-full max-w-[950px] flex-wrap items-center gap-x-8 gap-y-4 font-primary transition-colors duration-200 hover:text-${theme}-hl`
+      )}
+    >
+      {players.length === 0 && (
+        <>
+          <Skeleton theme={theme} />
+          <Skeleton theme={theme} />
+        </>
+      )}
+      {players.map((player) =>
+        player.id === id ? (
+          <div
+            key={player.id}
+            className='flex flex-1 flex-col items-start gap-2'
+          >
+            <div className='flex w-full items-center justify-between'>
+              <span className='flex items-center space-x-1'>
+                {winner === player.id && <Iconify icon="mdi:crown" className={`mr-1 text-${theme}-fg`} />}
+                <span className={`text-${theme}-fg`}>You </span>
+                <span className='text-xs'>
+                  (
+                  {isPlaying
+                    ? 'in game'
+                    : player.isOwner
+                    ? 'owner'
+                    : 'waiting for owner'}
+                  )
+                </span>
+              </span>
+              <span className={`text-sm text-${theme}-fg`}>{player.status.wpm} wpm</span>
+            </div>
+            <div className='h-2 w-full min-w-[230px] overflow-hidden rounded-lg bg-hl/40 xs:min-w-[350px]'>
+              <div
+                className='h-full rounded-lg bg-fg transition-all duration-500'
+                style={{
+                  width: `${player.status.progress}%`,
+                }}
+              ></div>
+            </div>
+          </div>
+        ) : (
+          <div
+            key={player.id}
+            className='flex flex-1 flex-col items-start gap-2'
+          >
+            <div className='flex w-full items-center justify-between'>
+              <span className='flex items-center space-x-1'>
+                {winner === player.id && (
+                  <Iconify icon="mdi:crown" className={`mr-1 text-${theme}-fg/50`} />
+                )}
+                <span className={`text-${theme}-fg/50`}>{player.username} </span>
+                <span className='text-xs'>
+                  (
+                  {isPlaying
+                    ? 'in game'
+                    : player.isOwner
+                    ? 'owner'
+                    : 'waiting for owner'}
+                  )
+                </span>
+              </span>
+              <span className={`text-sm text-${theme}-fg/50`}>
+                {player.status.wpm} wpm
+              </span>
+            </div>
+            <div className={`h-2 w-full min-w-[250px] overflow-hidden rounded-lg bg-${theme}-hl/20 xs:min-w-[350px]`}>
+              <div
+                className={`h-full rounded-lg bg-${theme}-fg/60 transition-all duration-500`}
+                style={{
+                  width: `${player.status.progress}%`,
+                }}
+              ></div>
+            </div>
+          </div>
+        )
+      )}
+    </div>
+  );
+}
