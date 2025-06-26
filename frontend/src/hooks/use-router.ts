@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams as useRouterParams } from 'react-router-dom';
 
 export function useRouter() {
   const navigate = useNavigate();
@@ -17,4 +17,8 @@ export function useRouter() {
   );
 
   return { router, pathname, search, state };
+}
+
+export function useParams() {
+  return useRouterParams();
 }
