@@ -1,4 +1,5 @@
 import Form from "@/components/Auth/Form";
+import { usePreferenceContext } from "@/context/Preference/PreferenceContext";
 import { useAuthContext } from "@/context/User/UserAuthContext";
 import useProfile from "@/hooks/use-profile";
 import { useRouter } from "@/hooks/use-router";
@@ -12,6 +13,7 @@ type AuthProps = {
 export default function Auth({ type }: AuthProps) {
   const { router } = useRouter()
   const { user, dispatch } = useAuthContext()
+  const { preferences: { theme } } = usePreferenceContext();
 
   useEffect(() => {
     if (user.isAuthenticated) {
@@ -31,7 +33,7 @@ export default function Auth({ type }: AuthProps) {
       {/* Main content */}
       <div className="relative z-10 w-full max-w-md">
         {/* Card container */}
-        <div className="bg-bg/80 backdrop-blur-xl border border-fg/10 rounded-2xl shadow-2xl shadow-fg/5 p-8">
+        <div className={`bg-${theme}-bg/80 backdrop-blur-xl border border-fg/10 rounded-2xl shadow-2xl shadow-fg/5 p-8`}>
           {/* Header */}
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-gradient-to-br from-fg to-fg/70 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
@@ -58,10 +60,10 @@ export default function Auth({ type }: AuthProps) {
                 )}
               </svg>
             </div>
-            <h1 className="text-3xl font-bold text-fg mb-2">
+            <h1 className={`text-3xl font-bold text-${theme}-fg mb-2`}>
               {type === "login" ? "Welcome Back" : "Create Account"}
             </h1>
-            <p className="text-hl text-sm">
+            <p className="text-${theme}-hl text-sm">
               {type === "login"
                 ? "Sign in to your account to continue"
                 : "Join us and start your journey"}
@@ -73,12 +75,12 @@ export default function Auth({ type }: AuthProps) {
 
           {/* Footer */}
           <div className="mt-6 text-center">
-            <p className="text-hl text-sm">
+            <p className={`text-${theme}-hl text-sm`}>
               {type === "login"
                 ? "Don't have an account? "
                 : "Already have an account? "}
               <Link
-                className="text-fg font-medium hover:text-fg/80 transition-colors duration-200 underline decoration-fg/30 underline-offset-2 hover:decoration-fg/60"
+                className={`text-${theme}-fg font-medium hover:text-${theme}-fg/80 transition-colors duration-200 underline decoration-fg/30 underline-offset-2 hover:decoration-fg/60`}
                 to={type === "login" ? "/auth/register" : "/auth/login"}
               >
                 {type === "login" ? "Sign up" : "Sign in"}
@@ -89,7 +91,7 @@ export default function Auth({ type }: AuthProps) {
 
         {/* Additional decorative elements */}
         <div className="mt-8 text-center">
-          <div className="flex items-center justify-center space-x-2 text-hl/60 text-xs">
+          <div className={`flex items-center justify-center space-x-2 text-${theme}-hl/60 text-xs`}>
             <div className="w-2 h-2 bg-fg/20 rounded-full"></div>
             <div className="w-2 h-2 bg-fg/20 rounded-full"></div>
             <div className="w-2 h-2 bg-fg/20 rounded-full"></div>

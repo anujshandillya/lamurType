@@ -1,3 +1,4 @@
+import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 import { useFormContext, Controller } from 'react-hook-form';
 
 // ----------------------------------------------------------------------
@@ -11,6 +12,7 @@ type RHFTextFieldProps = {
 
 export default function RHFTextField({ name, helperText, label, type = "text", ...other }: RHFTextFieldProps) {
   const { control } = useFormContext();
+  const { preferences: { theme } } = usePreferenceContext();
 
   return (
     <Controller
@@ -19,7 +21,7 @@ export default function RHFTextField({ name, helperText, label, type = "text", .
       render={({ field, fieldState: { error } }) => (
         <div className="space-y-1">
           <input
-            className='w-full rounded-lg border border-fg/20 bg-bg/50 backdrop-blur-sm px-4 py-3 text-sm font-normal text-fg placeholder:text-hl/60 focus:border-fg/40 focus:outline-none focus:ring-2 focus:ring-fg/20 transition-all duration-200'
+            className={`w-full rounded-lg border border-fg/20 bg-${theme}-bg/50 backdrop-blur-sm px-4 py-3 text-sm font-normal text-${theme}-fg placeholder:text-${theme}-hl/60 focus:border-fg/40 focus:outline-none focus:ring-2 focus:ring-fg/20 transition-all duration-200`}
             placeholder={label}
             type={type}
             {...field}

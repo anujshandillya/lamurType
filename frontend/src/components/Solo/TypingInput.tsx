@@ -106,7 +106,7 @@ const TypingInput = forwardRef<HTMLInputElement, TypingInputProps>(
         // todo: create leaderboard
         createLeaderboardData({
           name:
-            user?.first_name || localStorage?.getItem("nickname") || "guest",
+            `${user?.first_name} ${user?.last_name}` || localStorage?.getItem("nickname") || "guest",
           wpm: Math.round(((60 / dur) * correctChar) / 5),
           time: parseInt(time),
           type: type || "words",
@@ -142,7 +142,7 @@ const TypingInput = forwardRef<HTMLInputElement, TypingInputProps>(
             )}
           ></div>
         )}
-        <span className="absolute left-0 -top-[3.25rem] z-40 text-4xl text-fg/80">
+        <span className={`absolute left-0 -top-[3.25rem] z-40 text-4xl text-${theme}-fg/80`}>
           {timeLeft}
         </span>
 
@@ -206,7 +206,7 @@ const TypingInput = forwardRef<HTMLInputElement, TypingInputProps>(
           <span
             className={clsx(
               "absolute z-20 flex h-full w-full cursor-default items-center justify-center text-base opacity-0 transition-all duration-200",
-              { "text-fg opacity-100 ": !isFocused }
+              { [`text-${theme}-fg opacity-100`]: !isFocused }
             )}
           >
             Click
@@ -242,10 +242,9 @@ const TypingInput = forwardRef<HTMLInputElement, TypingInputProps>(
                 return (
                   <span
                     key={letter + index}
-                    className={`${color} ${
-                      state === 0 &&
-                      index < currIndex &&
-                      `border-b-2 border-${theme}-hl text-${theme}-hl`
+                    className={`${color} transition-all duration-150 ease-in-out ${
+                      currIndex+1 === index &&
+                      `border-b-2 border-${theme}-hl`
                     }`}
                   >
                     {letter}

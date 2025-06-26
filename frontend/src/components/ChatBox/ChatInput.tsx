@@ -5,6 +5,7 @@ import Iconify from "../Iconify";
 import { useForm } from "react-hook-form";
 import FormProvider from "../hook-form/FormProvider";
 import RHFTextField from "../hook-form/RHFTextField";
+import { usePreferenceContext } from "@/context/Preference/PreferenceContext";
 
 const ChatInput = ({ isPublic }: { isPublic: boolean }) => {
   //   const {
@@ -26,6 +27,8 @@ const ChatInput = ({ isPublic }: { isPublic: boolean }) => {
     defaultValues: defaultValue,
   });
 
+  const { preferences: { theme } } = usePreferenceContext();
+
   const { handleSubmit, watch } = methods;
 
   const values = watch();
@@ -43,7 +46,7 @@ const ChatInput = ({ isPublic }: { isPublic: boolean }) => {
           className="relative h-full border-b px-2 text-sm font-normal"
           type="submit"
         >
-          <span className="flex items-center text-fg transition-opacity duration-200 hover:text-opacity-80 active:text-opacity-70">
+          <span className={`flex items-center text-${theme}-fg transition-opacity duration-200 hover:text-opacity-80 active:text-opacity-70`}>
             Send
             <Iconify icon="mdi:send" />
           </span>

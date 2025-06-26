@@ -93,17 +93,17 @@ const Home = () => {
         <div className="flex flex-col items-center justify-center gap-2 font-primary">
           <div className="flex items-center space-x-2 text-sm">
             <Keyboard className="bg-white">tab</Keyboard>
-            <span className="text-hl"> + </span>
+            <span className={`text-${theme}-hl`}> + </span>
             <Keyboard className="bg-white">enter</Keyboard>
-            <span className="text-hl"> - restart test </span>
+            <span className={`text-${theme}-hl`}> - restart test </span>
           </div>
           <div className="flex items-center space-x-2 text-sm">
             <Keyboard className="bg-white">ctrl/cmd</Keyboard>
-            <span className="text-hl"> + </span>
+            <span className={`text-${theme}-hl`}> + </span>
             <Keyboard className="bg-white">k</Keyboard>
-            <span className="text-hl"> or </span>
+            <span className={`text-${theme}-hl`}> or </span>
             <Keyboard className="bg-white">p</Keyboard>
-            <span className="text-hl"> - command palette </span>
+            <span className={`text-${theme}-hl`}> - command palette </span>
           </div>
         </div>
       </div>

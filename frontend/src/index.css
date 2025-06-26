@@ -5,13 +5,8 @@
   --font-poppins: Poppins, sans-serif;
   --font-space-mono: "Space Mono", monospace;
   --font-inter: Inter, sans-serif;
-  --font-roboto: Roboto, sans-serif;
-  --font-lato: Lato, sans-serif;
-  --font-open-sans: "Open Sans", sans-serif;
-  --font-montserrat: Montserrat, sans-serif;
-  --font-raleway: Raleway, sans-serif;
-  --font-ubuntu: Ubuntu, sans-serif;
   --font-chakra-petch: "Chakra Petch", monospace;
+  --font-georgia: Georgia, serif;
 
   /* shadcn/ui design tokens - will be dynamically updated */
   --color-background: var(--shadcn-bg);
@@ -103,6 +98,13 @@
   --shadcn-hl: var(--color-plain-hl);
   --shadcn-fg: var(--color-plain-fg);
 }
+
+/* Theme font classes */
+.font-poppins { font-family: var(--font-poppins); }
+.font-space-mono { font-family: var(--font-space-mono); }
+.font-inter { font-family: var(--font-inter); }
+.font-chakra-petch { font-family: var(--font-chakra-petch); }
+.font-georgia { font-family: var(--font-georgia); }
 
 /* Theme utility classes */
 .bg-default-bg { background-color: oklch(0.9491 0 0); }

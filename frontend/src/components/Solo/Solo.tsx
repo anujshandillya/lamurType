@@ -4,10 +4,11 @@ import { shuffleList } from './functions';
 import TypingInput from './TypingInput';
 import Iconify from '../Iconify';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
+import Button from '../shared/Button';
 
 export default function Solo() {
   const {
-    preferences: { type, time, isOpen },
+    preferences: { type, time, isOpen, theme },
   } = usePreferenceContext();
 
   const [list, setList] = useState<string[]>(() => shuffleList(type));
@@ -38,7 +39,7 @@ export default function Solo() {
       <TypingInput ref={inputRef} text={list.join(' ')} time={time} />
 
       {/* Restart Button */}
-      <button
+      <Button
         onClick={() => {
             if(inputRef.current !== null) {
                 inputRef.current.focus();
@@ -47,7 +48,7 @@ export default function Solo() {
         }}
         ref={buttonRef}
         tabIndex={2}
-        className='group relative z-40 mt-2 flex items-center rounded-lg border-0 px-4 py-2 text-fg/50 outline-none transition-colors duration-200 hover:text-fg focus:bg-hl focus:text-bg active:bg-hl active:text-bg'
+        className={`group relative z-40 mt-2 flex items-center rounded-lg border-0 px-4 py-2 text-${theme}-fg/50 outline-none transition-colors duration-200 hover:text-${theme}-fg focus:bg-hl focus:text-bg active:bg-hl active:text-bg`}
       >
         <Tooltip>
             <TooltipTrigger>
@@ -59,7 +60,7 @@ export default function Solo() {
             </TooltipContent>
         </Tooltip>
 
-      </button>
+      </Button>
     </>
   );
 }

@@ -188,6 +188,12 @@ const commands = [
       },
       {
         icon: '',
+        commandName: 'georgia',
+        contents: [],
+        description: '- The five boxing wizards jump quickly.',
+      },
+      {
+        icon: '',
         commandName: 'exit',
         contents: [],
         description: '- quit command palette',

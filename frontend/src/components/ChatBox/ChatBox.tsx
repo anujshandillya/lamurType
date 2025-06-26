@@ -112,14 +112,14 @@ export default function ChatBox({
   return (
     <div
       className={clsx(
-        "flex h-full w-full min-w-[350px] md:min-w-[450px] lg:min-w-[550px] flex-col overflow-hidden rounded-lg border border-fg bg-bg",
+        `flex h-full w-full min-w-[350px] md:min-w-[450px] lg:min-w-[550px] flex-col overflow-hidden rounded-lg border border-fg bg-${theme}-bg`,
         className
       )}
     >
       <div className="flex items-center justify-between border-b border-fg px-4 py-2">
-        <span className="text-sm font-semibold text-fg">{label}</span>
+        <span className={`text-sm font-semibold text-${theme}-fg`}>{label}</span>
         {isRoomChat && (
-          <span className="text-xs text-fg/50">{onlineUsers} online</span>
+          <span className={`text-xs text-${theme}-fg/50`}>{onlineUsers} online</span>
         )}
       </div>
       <div
