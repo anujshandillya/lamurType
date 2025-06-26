@@ -1,15 +1,6 @@
-import clsx from "clsx";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogOverlay,
-  DialogPortal,
-  DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Command,
@@ -26,7 +17,7 @@ import { filterCommands, handleSelect } from "./functions";
 
 const SpotlightSearch = ({ data }: { data: CommandType[] }) => {
   const {
-    preferences: { theme, fontFamily, isOpen },
+    preferences: { isOpen },
     dispatch,
   } = usePreferenceContext();
   const [commands, setCommands] = useState(data);
@@ -43,7 +34,6 @@ const SpotlightSearch = ({ data }: { data: CommandType[] }) => {
         const selectedCommand = command.filter(
           (item) => item.commandName === selected
         );
-        console.log("selectedCommand", selectedCommand);
         if (selectedCommand.length === 0) return data;
 
         return selectedCommand[0].contents;
@@ -81,9 +71,6 @@ const SpotlightSearch = ({ data }: { data: CommandType[] }) => {
     };
   }, [page]);
 
-  //   console.log("query", query);
-  //   console.log("commands", commands);
-
   return (
     <Dialog
       open={isOpen}
@@ -118,7 +105,6 @@ const SpotlightSearch = ({ data }: { data: CommandType[] }) => {
                       setSelected('');
                       return;
                     }
-                    console.log("currentValue", currentValue);
                     setSelected(currentValue)
                     if (page === 2) {
                       handleSelect(selected, currentValue, dispatch);

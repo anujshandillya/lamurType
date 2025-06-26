@@ -9,7 +9,7 @@ import { endGameHander, startGameHander } from "./lib/gameHandler";
 import dotenv from "dotenv";
 dotenv.config();
 
-const port = process.env.PORT || 8080;
+const port = 4000;
 const app = express();
 app.use(cors());
 
@@ -29,10 +29,6 @@ export const playerRooms: PlayerState = {};
 export const rooms: RoomState = {};
 
 io.on("connection", (socket) => {
-	// console.log(io.sockets.adapter.rooms);
-	// console.log(sockets);
-	// console.log(socket.rooms);
-	// console.log("connected");
 	socket.join("public");
 	const sockets = Array.from(io.sockets.sockets).map((socket) => socket[0]);
 	io.to("public").emit("online users", sockets.length);

@@ -16,7 +16,7 @@ type FormProps = {
 export default function Form({ type }: FormProps) {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
-    const { user, dispatch } = useAuthContext()
+    const { dispatch } = useAuthContext()
     const { user: authUser } = useAuth()
     const {router} = useRouter()
     
@@ -52,9 +52,7 @@ export default function Form({ type }: FormProps) {
         defaultValues: defaultValues,
       });
 
-      const { handleSubmit, watch } = methods;
-
-      const values = watch();
+      const { handleSubmit } = methods;
 
       const onSubmit = async (data: typeof defaultValues) => {
         setIsLoading(true)
@@ -67,9 +65,6 @@ export default function Form({ type }: FormProps) {
                 if (result.error) {
                     setError((result.error as any)?.message || 'Login failed')
                 } else {
-                    console.log('Login successful:', result.data)
-                    // Handle successful login (redirect, set user state, etc.)
-                    console.log("anujanuj", user)
                     dispatch({ type: 'SET_USER', payload: {...authUser, isAuthenticated: true} })
                 }
             } else {
@@ -78,8 +73,6 @@ export default function Form({ type }: FormProps) {
                 if (result.error) {
                     setError((result.error as any)?.message || 'Registration failed')
                 } else {
-                    console.log('Registration successful:', result.data)
-                    // Handle successful registration (redirect, set user state, etc.)
                     router.replace('/auth/login')
                 }
             }

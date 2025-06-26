@@ -4,6 +4,8 @@ import { shuffleList } from "./functions";
 
 export const endGameHander = (socket: Socket) => {
 	socket.on("end game", (roomId: string, mode: "words" | "sentences" | "numbers") => {
+		if (!rooms[roomId]) return;
+		
 		const toType = shuffleList(mode).join(" ");
 		rooms[roomId] = {
 			players: rooms[roomId].players,
@@ -19,8 +21,12 @@ export const endGameHander = (socket: Socket) => {
 
 export const startGameHander = (socket: Socket) => {
 	socket.on("start game", (roomId: string) => {
+		if (!rooms[roomId]) return;
+		
+		rooms[roomId].inGame = true;
+		rooms[roomId].winner = null;
+		
 		io.in(roomId).emit("words generated", rooms[roomId].toType);
 		io.in(roomId).emit("start game");
-		rooms[roomId].inGame = true;
 	});
 };

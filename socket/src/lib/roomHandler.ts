@@ -5,7 +5,9 @@ import { shuffleList } from "./functions";
 
 export const createRoomHandler = (socket: Socket) => {
 	socket.on("create room", (roomId: string, mode: "words" | "sentences" | "numbers") => {
+		
 		if (io.sockets.adapter.rooms.get(roomId)) {
+			
 			socket.emit("room already exist");
 		} else {
 			const toType = shuffleList(mode).join(" ");
@@ -16,56 +18,79 @@ export const createRoomHandler = (socket: Socket) => {
 				winner: null,
 			};
 
+			// Join the socket to the room
+			socket.join(roomId);
+			playerRooms[socket.id] = [roomId];
+
+			
 			socket.emit("words generated", rooms[roomId].toType);
 			socket.emit("create room success", roomId);
-			// console.log(roomId);
-			// console.log(io.sockets.adapter.rooms.get(roomId));
-			// const sockets = Array.from(io.sockets.sockets).map((socket) => socket[0]);
-			// console.log("room created: ", socket.rooms);
 		}
 	});
 };
 
 export const updateRoomHandler = (socket: Socket) => {
 	socket.on("room update", (user: Player) => {
+		
 		const { roomId } = user;
-		if (!rooms[roomId]) return;
-		const players = rooms[roomId].players;
-		rooms[roomId].players = players.map((player) => (player.id !== user.id ? player : user));
+		if (!rooms[roomId]) {
+			
+			return;
+		}
+		
+		
+		const playerIndex = rooms[roomId].players.findIndex(player => player.id === user.id);
+		
+		
+		if (playerIndex !== -1) {
+			// Update existing player
+			rooms[roomId].players[playerIndex] = user;
+			
+		} else {
+			// Add new player if not found
+			rooms[roomId].players.push(user);
+			
+		}
+		
+		
 		io.in(roomId).emit("room update", rooms[roomId].players);
-
-		// start game
-		// const allPlayersReady = rooms[roomId].players.every((player) => player.isReady);
-		// if (allPlayersReady) {
-		// 	io.in(roomId).emit("start game");
-		// 	rooms[roomId].inGame = true;
-		// } else {
-		// 	rooms[roomId].inGame = false;
-		// }
 	});
 };
 
 export const joinRoomHander = (socket: Socket) => {
 	socket.on("join room", ({ roomId, user }: { roomId: string; user: Player }) => {
-		socket.emit("end game");
+		
 		const room = rooms[roomId];
 		if (!room) {
+			
 			socket.emit("room invalid");
 			return;
 		} else if (rooms[roomId].inGame) {
+			
 			socket.emit("room in game");
 			return;
 		} else {
-			rooms[roomId].players = [...rooms[roomId].players, user];
+			// Check if user is already in the room
+			const existingPlayerIndex = rooms[roomId].players.findIndex(player => player.id === user.id);
+			
+			
+			
+			if (existingPlayerIndex === -1) {
+				rooms[roomId].players = [...rooms[roomId].players, user];
+				
+			} else {
+				// Update existing player
+				rooms[roomId].players[existingPlayerIndex] = user;
+				
+			}
 			playerRooms[socket.id] = [roomId];
 		}
 
 		socket.join(roomId);
+		
 		socket.emit("words generated", rooms[roomId].toType);
 		io.in(roomId).emit("room update", rooms[roomId].players);
-		// socket.to(roomId).emit("notify", `${user.username} is here.`);
 		io.in(roomId).emit("receive chat", { username: user.username, value: "joined", id: user.id, type: "notification" });
-		// console.log("join", rooms);
 	});
 };
 
@@ -86,6 +111,5 @@ export const leaveRoomHandler = (socket: Socket) => {
 		if (rooms[roomId].players.length === 0) {
 			delete rooms[roomId];
 		}
-		// console.log("leave ", rooms);
 	});
 };

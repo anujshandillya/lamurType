@@ -4,7 +4,6 @@ import { io, playerRooms, rooms } from "..";
 export const disconnectHandler = (socket: Socket) => {
 	socket.on("disconnect", () => {
 		// disconnected client id
-		// console.log("disconnected");
 		const sockets = Array.from(io.sockets.sockets).map((socket) => socket[0]);
 		io.to("public").emit("online users", sockets.length);
 
@@ -30,8 +29,5 @@ export const disconnectHandler = (socket: Socket) => {
 
 		// remove player
 		delete playerRooms[socket.id];
-
-		// console.log("disconnect", rooms);
-		// console.log(io.sockets.adapter.rooms);
 	});
 };

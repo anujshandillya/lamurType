@@ -2,10 +2,9 @@ import { usePreferenceContext } from "@/context/Preference/PreferenceContext";
 import useLeaderboard from "@/hooks/use-leaderboard";
 import useProfile from "@/hooks/use-profile";
 import clsx from "clsx";
-import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import useTyping from "react-typing-game-hook";
 import Iconify from "../Iconify";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 type TypingInputProps = {
   text: string;
@@ -46,28 +45,6 @@ const TypingInput = forwardRef<HTMLInputElement, TypingInputProps>(
 
     const [margin, setMargin] = useState(0);
     const [value, setValue] = useState("");
-
-    const pos = useMemo(() => {
-      if (currIndex !== -1 && letterElements.current) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const spanref: any = letterElements.current.children[currIndex];
-        const left = spanref.offsetLeft;
-        const top = spanref.offsetTop - 2;
-        if (top > 60) {
-          setMargin((margin) => margin + 1);
-          return {
-            left,
-            top: top / 2,
-          };
-        }
-        return { left, top };
-      } else {
-        return {
-          left: -2,
-          top: 2,
-        };
-      }
-    }, [currIndex]);
 
     useEffect(() => {
       setValue("");
