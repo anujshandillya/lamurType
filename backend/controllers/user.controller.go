@@ -7,6 +7,7 @@ import (
 
 	"github.com/anujshandillya/lamurTypeServer/helpers"
 	"github.com/anujshandillya/lamurTypeServer/models"
+	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
 type RegisterBody struct {
@@ -25,6 +26,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		json.NewEncoder(w).Encode(map[string]string{"error": "Invalid request payload"})
 		return
 	}
 
@@ -42,7 +44,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(map[string]string{"message": "User created successfully", "user_id": newUser.InsertedID.(string)})
+	json.NewEncoder(w).Encode(map[string]string{"message": "User created successfully", "user_id": newUser.InsertedID.(bson.ObjectID).Hex()})
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
