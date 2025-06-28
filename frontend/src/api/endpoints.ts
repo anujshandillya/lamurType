@@ -7,6 +7,6 @@ export const ENDPOINTS = {
     },
     leaderboard: {
         root: '/leaderboard/',
-        profile: '/leaderboard/profile',
+        profile: '/profile/',
     },
 }
