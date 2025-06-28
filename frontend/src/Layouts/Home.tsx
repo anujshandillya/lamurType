@@ -4,7 +4,7 @@ import { useRouter } from "../hooks/use-router";
 import Iconify from "../components/Iconify";
 import Keyboard from "../components/Keyboard";
 import ChatBox from "../components/ChatBox/ChatBox";
-import Drawer from "../components/shared/Drawer";
+import ShadcnDrawer from "../components/shared/ShadcnDrawer";
 import { useBoolean } from "../hooks/use-boolean";
 import { usePreferenceContext } from "@/context/Preference/PreferenceContext";
 import { Link } from "react-router-dom";
@@ -23,26 +23,28 @@ const Home = () => {
   return (
     <section>
       <Button
-        onClick={drawer.onTrue}
+        onClick={() => {
+          console.log('Button clicked!');
+          drawer.onTrue();
+          console.log('Drawer value after click:', drawer.value);
+        }}
         className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-fg px-4 py-2 text-white shadow-lg hover:bg-fg/90 transition-colors duration-200"
       >
         <Iconify icon="mdi:chat" />
       </Button>
       <div className="layout flex flex-col items-center gap-8 pt-8 text-center">
-        <Drawer
+        <ShadcnDrawer
           open={drawer.value}
-          onClose={drawer.onFalse}
-          position="right"
-          size="md"
+          onOpenChange={drawer.toggle}
           title="Chat"
           theme={theme}
         >
           <ChatBox
-            className="h-[80vh] w-full max-w-[400px]"
+            className="h-[calc(100vh-120px)] w-full"
             label="Public Chat"
             theme={theme}
           />
-        </Drawer>
+        </ShadcnDrawer>
 
         <div className="aspect-video w-full min-w-[450px] overflow-hidden rounded-lg ring-4 ring-fg ring-offset-4 ring-offset-bg">
           <iframe

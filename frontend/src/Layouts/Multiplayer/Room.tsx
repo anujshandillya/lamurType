@@ -115,8 +115,7 @@ export default function MultiplayerPageID() {
   }, [params.id, user.id]);
 
   return (
-    <section>
-      <div className="layout flex flex-col items-center pt-28 text-center">
+    <>
         <Multiplayer />
 
         <div className="mt-8 flex flex-col items-center justify-center gap-2 font-primary">
@@ -133,9 +132,9 @@ export default function MultiplayerPageID() {
             <span className="text-hl"> or </span>
             <Keyboard>p</Keyboard>
             <span className="text-hl"> - command palette </span>
-          </div>
         </div>
       </div>
-    </section>
+    </>
+    
   );
 }

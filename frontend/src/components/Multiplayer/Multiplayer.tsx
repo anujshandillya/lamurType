@@ -6,6 +6,11 @@ import TypingInput from '@/components/Multiplayer/TypingInput';
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 import { useRoomContext } from '@/context/Room/RoomContext';
 import _ from 'lodash';
+import { useBoolean } from '@/hooks/use-boolean';
+import ChatBox from '../ChatBox/ChatBox';
+import Button from '../shared/Button';
+import Iconify from '../Iconify';
+import ShadcnDrawer from '../shared/ShadcnDrawer';
 
 export default function Multiplayer() {
   const {
@@ -48,11 +53,31 @@ export default function Multiplayer() {
 
   const inputRef = React.useRef<HTMLInputElement>(null);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
+  const drawer = useBoolean(false);
 
   return (
     <>
       {/* Multiplayer */}
       <TypingInput ref={inputRef} theme={theme} />
+      <Button
+        onClick={drawer.onTrue}
+        className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-fg px-4 py-2 text-white shadow-lg hover:bg-fg/90 transition-colors duration-200"
+      >
+        <Iconify icon="mdi:chat" />
+      </Button>
+      <ShadcnDrawer
+          open={drawer.value}
+          onOpenChange={drawer.toggle}
+          title="Chat"
+          theme={theme}
+        >
+          <ChatBox
+            className="h-[80vh] w-full max-w-[400px]"
+            label="Public Chat"
+            isRoomChat={true}
+            theme={theme}
+          />
+        </ShadcnDrawer>
 
       <div>
         <button
