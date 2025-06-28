@@ -16,7 +16,8 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://backend:3000',
+        // target: 'http://backend:3000', for docker container
+        target: 'http://localhost:3000',
         changeOrigin: true
       }
     }
