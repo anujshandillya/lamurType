@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useProfile from "@/hooks/use-profile";
 import { Button } from "@/components/ui/button";
 import { UserStats } from "./UserStats";
 import { LeaderboardStats } from "./LeaderboardStats";
 import Iconify from "@/components/Iconify";
 import useLeaderboard from "@/hooks/use-leaderboard";
+import { useSearchParams } from "react-router-dom";
 
 const Profile = () => {
+    const [searchParams] = useSearchParams()
+    const tab = searchParams.get('tab')
     const { user, profileStats, isLoading } = useProfile();
     const { allTime, daily } = useLeaderboard();
     const [activeTab, setActiveTab] = useState<'overview' | 'stats' | 'leaderboard'>('overview');
@@ -48,6 +51,12 @@ const Profile = () => {
     const getTotalTests = (stats: any[]) => {
         return stats?.length || 0;
     };
+
+    useEffect(() => {
+        if (tab === 'leaderboard') {
+            setActiveTab('leaderboard')
+        }
+    }, [tab])
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

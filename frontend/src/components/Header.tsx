@@ -36,8 +36,7 @@ const Header = ({ className }: HeaderProps) => {
       </Link>
       <nav>
         <ul className="flex font-mono space-x-4">
-          <Link to="/">Home</Link>
-          <Link to="/leaderboard">Leaderboard</Link>
+          <Link to="/profile?tab=leaderboard">Leaderboard</Link>
           {user.isAuthenticated ? (
             <DropdownMenu>
               <DropdownMenuTrigger>Account</DropdownMenuTrigger>
