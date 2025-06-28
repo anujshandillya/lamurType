@@ -1,4 +1,3 @@
-// import { useRoomContext } from '@/context/Room/RoomContext';
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Iconify from "../Iconify";
@@ -34,7 +33,6 @@ const ChatInput = ({ isPublic }: { isPublic: boolean }) => {
   const { handleSubmit, setValue } = methods;
 
   const onSubmit = (data: typeof defaultValue) => {
-    // handle sockets
     console.log("Submitted data:", data);
         const { message: value } = data
         if (!value) return;

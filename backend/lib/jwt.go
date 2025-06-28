@@ -42,7 +42,6 @@ func VerifyJWT(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		// Attach user ID to context if needed
 		r.Header.Set("user_id", claims["user_id"].(string))
 
 		next.ServeHTTP(w, r)

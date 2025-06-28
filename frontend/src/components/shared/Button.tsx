@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button as Buttonx, buttonVariants } from '../ui/button';
+import { Button as Buttonx } from '../ui/button';
 import { cn } from '@/lib/utils';
 
 type ButtonVariant = 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
@@ -16,10 +16,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Buttonx
         className={cn(
-          // Custom styles for your specific design
           isDarkBg && "bg-fg text-bg shadow-fg/50 hover:bg-fg/90",
           isLoading && "opacity-50 cursor-not-allowed",
-          // Add any additional custom classes
           className
         )}
         variant={variant}

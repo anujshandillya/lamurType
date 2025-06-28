@@ -18,7 +18,6 @@ export const createRoomHandler = (socket: Socket) => {
 				winner: null,
 			};
 
-			// Join the socket to the room
 			socket.join(roomId);
 			playerRooms[socket.id] = [roomId];
 
@@ -42,16 +41,11 @@ export const updateRoomHandler = (socket: Socket) => {
 		const playerIndex = rooms[roomId].players.findIndex(player => player.id === user.id);
 		
 		
-		if (playerIndex !== -1) {
-			// Update existing player
+		if (playerIndex !== -1) {			
 			rooms[roomId].players[playerIndex] = user;
-			
 		} else {
-			// Add new player if not found
 			rooms[roomId].players.push(user);
-			
 		}
-		
 		
 		io.in(roomId).emit("room update", rooms[roomId].players);
 	});
@@ -70,18 +64,13 @@ export const joinRoomHander = (socket: Socket) => {
 			socket.emit("room in game");
 			return;
 		} else {
-			// Check if user is already in the room
-			const existingPlayerIndex = rooms[roomId].players.findIndex(player => player.id === user.id);
-			
-			
+			const existingPlayerIndex = rooms[roomId].players.findIndex(player => player.id === user.id);	
 			
 			if (existingPlayerIndex === -1) {
 				rooms[roomId].players = [...rooms[roomId].players, user];
 				
 			} else {
-				// Update existing player
 				rooms[roomId].players[existingPlayerIndex] = user;
-				
 			}
 			playerRooms[socket.id] = [roomId];
 		}
@@ -101,7 +90,6 @@ export const leaveRoomHandler = (socket: Socket) => {
 		if (!players) return;
 		rooms[roomId].players = players.players.filter((player) => {
 			if (player.id === user.id) {
-				// socket.to(roomId).emit("leave room", player.username);
 				io.in(roomId).emit("receive chat", { username: player.username, value: "left", id: player.id });
 			}
 			return player.id !== user.id;

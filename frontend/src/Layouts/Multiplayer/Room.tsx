@@ -22,7 +22,6 @@ export default function MultiplayerPageID() {
 
   useEffect(() => {
     if (user.id && params.id) {
-      // Clear any existing event listeners first
       socket.off("room update");
       socket.off("start game");
       socket.off("end game");
@@ -35,7 +34,6 @@ export default function MultiplayerPageID() {
       dispatch({ type: "SET_ROOM_ID", payload: params.id as string });
       chatDispatch({ type: "CLEAR_ROOM_CHAT" });
 
-      // Handle socket connection errors
       socket.on("connect_error", (error) => {
         console.error("Socket connection error in room:", error);
         toast.error("Failed to connect to server. Please try again.", {
@@ -46,7 +44,6 @@ export default function MultiplayerPageID() {
       });
 
       socket.on("room update", (players: Player[]) => {
-        // Filter out duplicate players by ID
         const uniquePlayers = players.filter(
           (player, index, self) =>
             index === self.findIndex((p) => p.id === player.id)
@@ -99,7 +96,6 @@ export default function MultiplayerPageID() {
         dispatch({ type: "SET_TEXT", payload: text });
       });
 
-      // Cleanup function
       return () => {
         socket.off("room update");
         socket.off("start game");

@@ -42,7 +42,6 @@ export default function MultiplayerPage() {
   React.useEffect(() => {
     socket.emit('hi', 'hello');
 
-    // Handle socket connection errors
     socket.on('connect_error', (error) => {
       console.error('Socket connection error:', error);
       toast.error('Failed to connect to server. Please try again.', {
@@ -53,7 +52,6 @@ export default function MultiplayerPage() {
       setIsCreatingRoom(false);
     });
 
-    // create another room id if already exist
     socket.off('room already exist').on('room already exist', () => {
       createRoom(socket, mode);
     });
@@ -67,7 +65,6 @@ export default function MultiplayerPage() {
       resetTime(0);
     });
 
-    // on create room success, redirect to that room
     socket
       .off('create room success')
       .on('create room success', (roomId: string) => { 
@@ -81,7 +78,6 @@ export default function MultiplayerPage() {
         router.push(`/multiplayer/${roomId}`);
       });
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSubmit = ({ code }: { code: string }) => {
@@ -94,10 +90,7 @@ export default function MultiplayerPage() {
         <section>
           <div className='layout flex min-h-[65vh] w-full flex-col items-center pt-10 text-center font-primary'>
             <div className='relative mb-8 flex h-8 w-full max-w-[800px] items-center justify-between'>
-              {/* <ChatBox
-                className='right-3 w-[calc(100%+0.5rem)] sm:right-2'
-                label='public chat'
-              /> */}
+
             </div>
             <div className='flex w-full flex-col gap-4'>
               <Iconify icon="mdi:team" className='self-center text-[5rem] text-fg' />

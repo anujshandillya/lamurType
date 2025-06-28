@@ -2,8 +2,6 @@ import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
 import { useFormContext, Controller } from 'react-hook-form';
 import { Input } from '../ui/input';
 
-// ----------------------------------------------------------------------
-
 type RHFTextFieldProps = {
   name: string;
   helperText?: React.ReactNode;

@@ -7,14 +7,7 @@ import { useRoomContext } from '@/context/Room/RoomContext';
 
 import Players from './Players';
 import Code from './RoomCode';
-// import ChatBox from '../ChatBox/ChatBox';
 import Iconify from '../Iconify';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 type TypingInputProps = React.ComponentPropsWithRef<'input'> & {
   theme: string;

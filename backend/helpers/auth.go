@@ -102,8 +102,6 @@ func CreateUser(user models.User) (*mongo.InsertOneResult, error) {
 	return nil, fmt.Errorf("user with email %s already exists", user.Email)
 }
 
-// Global in-memory token blacklist
-// In production, this should be replaced with Redis or a database
 var invalidatedTokens = make(map[string]time.Time)
 var tokenMutex = &sync.Mutex{}
 

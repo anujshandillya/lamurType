@@ -3,11 +3,9 @@ import { io, playerRooms, rooms } from "..";
 
 export const disconnectHandler = (socket: Socket) => {
 	socket.on("disconnect", () => {
-		// disconnected client id
 		const sockets = Array.from(io.sockets.sockets).map((socket) => socket[0]);
 		io.to("public").emit("online users", sockets.length);
 
-		// the rooms player is currently in
 		const disconnectPlayerFrom = playerRooms[socket.id];
 		if (!disconnectPlayerFrom) return;
 		disconnectPlayerFrom.forEach((roomId) => {
@@ -15,7 +13,6 @@ export const disconnectHandler = (socket: Socket) => {
 			const players = rooms[roomId].players;
 			rooms[roomId].players = players.filter((player) => {
 				if (player.id === socket.id) {
-					// io.in(roomId).emit("leave room", player.username);
 					io.in(roomId).emit("receive chat", { username: player.username, value: "left", id: player.id });
 				}
 				return player.id !== socket.id;
@@ -27,7 +24,6 @@ export const disconnectHandler = (socket: Socket) => {
 			}
 		});
 
-		// remove player
 		delete playerRooms[socket.id];
 	});
 };

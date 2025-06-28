@@ -43,7 +43,6 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
     socket,
   });
 
-  // Update username when user profile becomes available
   React.useEffect(() => {
     if (userProfile) {      
       const nickname = localStorage?.getItem('nickname');
@@ -105,7 +104,6 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
 
     socket.connect();
 
-    // Cleanup function
     return () => {
       socket.off('connect');
       socket.off('disconnect');

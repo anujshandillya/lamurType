@@ -25,7 +25,6 @@ export const io = new Server(server, {
 
 export const playerRooms: PlayerState = {};
 
-// rooms will consist of key value pair, key being room id, pair being users inside that room and their corresponding data
 export const rooms: RoomState = {};
 
 io.on("connection", (socket) => {
@@ -33,26 +32,21 @@ io.on("connection", (socket) => {
 	const sockets = Array.from(io.sockets.sockets).map((socket) => socket[0]);
 	io.to("public").emit("online users", sockets.length);
 
-	// send online users
 	socket.on("get online users", () => {
 		const sockets = Array.from(io.sockets.sockets).map((socket) => socket[0]);
 		io.to("public").emit("online users", sockets.length);
 	});
 
-	// chat handlers
 	socket.on("send chat", ({ username, value, roomId, id }: SendChat) => {
 		console.log(roomId);
 		io.to(roomId).emit("receive chat", { username, value, id, type: "message", roomId });
 	});
 
-	// handle user disconnect
 	disconnectHandler(socket);
 
-	// game handlers
 	startGameHander(socket);
 	endGameHander(socket);
 
-	// room handlers
 	joinRoomHander(socket);
 	leaveRoomHandler(socket);
 	createRoomHandler(socket);

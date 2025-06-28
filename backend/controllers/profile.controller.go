@@ -18,7 +18,6 @@ func GetUserStats(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	// Get user ID from header (set by middleware)
 	userID := r.Header.Get("user_id")
 	if userID == "" {
 		http.Error(w, "User not authenticated", http.StatusUnauthorized)
@@ -28,7 +27,6 @@ func GetUserStats(w http.ResponseWriter, r *http.Request) {
 
 	yesterday := time.Now().Add(-24 * time.Hour)
 
-	// Convert string user ID to ObjectID
 	objectID, err := bson.ObjectIDFromHex(userID)
 	if err != nil {
 		http.Error(w, "Invalid user ID", http.StatusBadRequest)

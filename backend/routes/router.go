@@ -20,7 +20,6 @@ var leaderboardRouter = Router.PathPrefix("/api/leaderboard").Subrouter()
 var profileRouter = Router.PathPrefix("/api/profile").Subrouter()
 
 func init() {
-	// Apply CORS middleware to all routes
 	Router.Use(mux.CORSMethodMiddleware(Router))
 
 	Router.HandleFunc("/api/hello", middleware.CORS(middleware.VerifyJWT(helloAPI))).Methods("GET", "OPTIONS")

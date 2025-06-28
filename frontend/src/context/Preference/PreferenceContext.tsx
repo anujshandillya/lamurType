@@ -4,7 +4,6 @@ import { type ProviderState } from "./types";
 
 const PreferenceContext = createContext<ProviderState>({} as ProviderState);
 
-// Function to update shadcn theme variables
 const updateShadcnTheme = (theme: string) => {
   const root = document.documentElement;
   const bgVar = `--color-${theme}-bg`;
@@ -44,7 +43,6 @@ export default function PreferenceProvider({ children }: { children: React.React
         }
     }, [])
 
-    // Update shadcn theme when preference.theme changes
     useEffect(() => {
         updateShadcnTheme(preference.theme);
     }, [preference.theme]);
