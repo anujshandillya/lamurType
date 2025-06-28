@@ -12,9 +12,10 @@ type UserPayload = {
     isAuthenticated: boolean;
 };
 
-type ProfileStatsPayload = {
+export type ProfileStatsPayload = {
+  daily: LeaderboardPayload[];
+  allTime: LeaderboardPayload[];
   best: LeaderboardPayload[];
-  recent: LeaderboardPayload[];
 };
 
 export const getCurrentUser = async (): Promise<UserPayload | null> => {

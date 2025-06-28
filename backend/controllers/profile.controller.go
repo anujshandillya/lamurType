@@ -38,10 +38,11 @@ func GetUserStats(w http.ResponseWriter, r *http.Request) {
 
 	var dailyProfile []models.Leaderboard
 	var allTimeProfile []models.Leaderboard
-	var dailyErr, allTimeErr error
+	var bestProfile []models.Leaderboard
+	var dailyErr, allTimeErr, bestErr error
 
 	var wg sync.WaitGroup
-	wg.Add(2)
+	wg.Add(3)
 
 	go func() {
 		defer wg.Done()
@@ -75,6 +76,22 @@ func GetUserStats(w http.ResponseWriter, r *http.Request) {
 		}
 	}()
 
+	go func() {
+		defer wg.Done()
+		bestFilter := bson.M{"user_id": objectID, "created_at": bson.M{"$gte": yesterday}}
+		bestCursor, err := models.LeaderboardCollection.Find(ctx, bestFilter, options.Find().SetSort(bson.D{{Key: "wpm", Value: -1}}))
+		if err != nil {
+			bestErr = err
+			return
+		}
+		defer bestCursor.Close(ctx)
+
+		if err := bestCursor.All(ctx, &bestProfile); err != nil {
+			bestErr = err
+			return
+		}
+	}()
+
 	wg.Wait()
 
 	if dailyErr != nil {
@@ -87,9 +104,15 @@ func GetUserStats(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if bestErr != nil {
+		http.Error(w, bestErr.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	response := map[string]any{
 		"daily":   dailyProfile,
 		"allTime": allTimeProfile,
+		"best":    bestProfile,
 	}
 
 	w.WriteHeader(http.StatusOK)
