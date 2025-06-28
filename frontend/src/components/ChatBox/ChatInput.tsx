@@ -6,14 +6,16 @@ import { useForm } from "react-hook-form";
 import FormProvider from "../hook-form/FormProvider";
 import RHFTextField from "../hook-form/RHFTextField";
 import { usePreferenceContext } from "@/context/Preference/PreferenceContext";
+import { useRoomContext } from "@/context/Room/RoomContext";
+import Button from "../shared/Button";
 
 const ChatInput = ({ isPublic }: { isPublic: boolean }) => {
-  //   const {
-  //     room: {
-  //       socket,
-  //       user: { username, roomId, id },
-  //     },
-  //   } = useRoomContext();
+    const {
+      room: {
+        socket,
+        user: { username, roomId, id },
+      },
+    } = useRoomContext();
   const defaultValue = {
     message: "",
   };
@@ -29,28 +31,41 @@ const ChatInput = ({ isPublic }: { isPublic: boolean }) => {
 
   const { preferences: { theme } } = usePreferenceContext();
 
-  const { handleSubmit, watch } = methods;
-
-  const values = watch();
+  const { handleSubmit, setValue } = methods;
 
   const onSubmit = (data: typeof defaultValue) => {
     // handle sockets
     console.log("Submitted data:", data);
+        const { message: value } = data
+        if (!value) return;
+        if (isPublic) {
+          socket.emit('send chat', { username, value, roomId: 'public', id });
+          setValue('message', '');
+          return;
+        }
+        socket.emit('send chat', { username, value, roomId, id });
+        setValue('message', '');
   };
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex h-12 w-full items-center justify-between border-t px-2 sm:px-4">
-        <RHFTextField name="message" helperText={values.message} />
-        <button
-          className="relative h-full border-b px-2 text-sm font-normal"
+      <div className="flex h-16 w-full items-center gap-3 border-t px-4">
+        <div className="flex-1">
+          <RHFTextField 
+            name="message" 
+            label="Type a message..." 
+            fullWidth={true}
+          />
+        </div>
+        <Button
+          className="h-10 px-4 text-sm font-medium"
           type="submit"
         >
-          <span className={`flex items-center text-${theme}-fg transition-opacity duration-200 hover:text-opacity-80 active:text-opacity-70`}>
+          <span className={`flex items-center gap-2 text-${theme}-fg transition-opacity duration-200 hover:text-opacity-80 active:text-opacity-70`}>
             Send
-            <Iconify icon="mdi:send" />
+            <Iconify icon="mdi:send" className="h-4 w-4" />
           </span>
-        </button>
+        </Button>
       </div>
     </FormProvider>
   );
