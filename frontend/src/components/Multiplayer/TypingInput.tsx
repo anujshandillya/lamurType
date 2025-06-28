@@ -244,15 +244,17 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
               }}
             />
             {/* Cursor indicator */}
-            {isFocused && isPlaying && (
-              <div
-                className={`absolute z-30 h-6 w-0.5 bg-${theme}-hl transition-all duration-150 ease-in-out`}
-                style={{
-                  left: `${pos.left}px`,
-                  top: `${pos.top}px`,
-                }}
-              />
-            )}
+            {isFocused && phase !== 2 && (
+            <div
+              className={`absolute z-20 h-6 pt-1 w-[2px] bg-${theme}-hl transition-all duration-150 ease-in-out`}
+              style={{
+                left: `${pos.left}px`,
+                top: `${pos.top}px`,
+                backgroundColor: `var(--color-${theme}-hl)`,
+                animation: 'cursor-blink 1.2s ease-in-out infinite',
+              }}
+            />
+          )}
             <div
               className={clsx(
                 'absolute -top-4 z-10 h-4 w-full bg-gradient-to-b from-bg transition-all duration-200',
@@ -321,10 +323,7 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                   return (
                     <span
                       key={letter + index}
-                      className={`${color} transition-all duration-150 ease-in-out ${
-                        currIndex + 1 === index &&
-                        `border-b-2 border-${theme}-hl`
-                      }`}
+                      className={`${color} transition-all duration-150 ease-in-out`}
                     >
                       {letter}
                     </span>
