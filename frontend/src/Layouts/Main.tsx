@@ -25,13 +25,13 @@ const Main = ({ children }: MainProps) => {
   
   return (
     <main 
-      className={clsx(`font-${fontFamily} bg-${theme}-bg text-${theme}-font flex h-screen w-full flex-col items-center justify-center`)}
+      className={clsx(`font-${fontFamily} bg-${theme}-bg text-${theme}-font flex w-full min-h-screen flex-col items-center`)}
     >
-      <Header className="fixed top-0" />
-      <div className={clsx("flex w-full max-w-3xl flex-col items-center justify-center pt-12")}>
+      <Header className="fixed top-0 z-10" />
+      <div className={clsx("flex w-full max-w-3xl flex-col items-center justify-center pt-12 flex-1")}>
         {children}
       </div>
-      <Footer className="absolute bottom-0" theme={theme} />
+      <Footer className="mt-auto" theme={theme} />
     </main>
   );
 };

@@ -12,6 +12,7 @@ import { RoomProvider } from "./context/Room/RoomContext";
 import { ChatProvider } from "./context/Chat/ChatContext";
 import MultiplayerPage from "./Layouts/Multiplayer/Index";
 import MultiplayerPageID from "./Layouts/Multiplayer/Room";
+import Profile from "./components/Profile";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
                     path="/auth/register"
                     element={<Auth type="register" />}
                   />
+                  <Route path="/profile" element={<Profile />} />
                   <Route path="/solo" element={<SoloPage />} />
                   <Route path="/multiplayer" element={<MultiplayerPage />} />
                   <Route path="/multiplayer/:id" element={<MultiplayerPageID />} />

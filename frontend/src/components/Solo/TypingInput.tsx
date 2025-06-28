@@ -54,12 +54,10 @@ const TypingInput = forwardRef<HTMLInputElement, TypingInputProps>(
 
     const pos = useMemo(() => {
       if (currIndex !== -1 && letterElements.current) {
-        // Use currIndex + 1 to position cursor at the next character position
         const nextIndex = currIndex + 1;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const spanref: any = letterElements.current.children[nextIndex];
         if (!spanref) {
-          // If we're at the end of the text, position after the last character
           const lastSpan: any = letterElements.current.children[currIndex];
           if (lastSpan) {
             const left = lastSpan.offsetLeft + lastSpan.offsetWidth;
@@ -73,7 +71,6 @@ const TypingInput = forwardRef<HTMLInputElement, TypingInputProps>(
         const left = spanref.offsetLeft;
         const top = spanref.offsetTop - 2;
 
-        // Account for the margin offset when calculating position
         const adjustedTop = top + (margin * 39);
 
         if (adjustedTop > 60) {
@@ -125,8 +122,6 @@ const TypingInput = forwardRef<HTMLInputElement, TypingInputProps>(
       if (phase === 2 && endTime && startTime) {
         const dur = Math.floor((endTime - startTime) / 1000);
         setDuration(dur);
-
-        // todo: create leaderboard
         createLeaderboardData({
           name:
             `${user?.first_name} ${user?.last_name}` || localStorage?.getItem("nickname") || "guest",
@@ -159,185 +154,186 @@ const TypingInput = forwardRef<HTMLInputElement, TypingInputProps>(
     };
 
     return (
-      <div className="relative w-full max-w-[950px]">
-        {zenMode && (
+      <TooltipProvider>
+        <div className="relative w-full max-w-[950px]">
+          {zenMode && (
+            <div
+              className={clsx(
+                `pointer-events-none fixed inset-0 z-30 h-screen w-screen bg-${theme}-bg transition-opacity duration-200`,
+                { "opacity-0": !isFocused }
+              )}
+            ></div>
+          )}
+          <span className={`absolute left-0 -top-[3.25rem] z-40 text-4xl text-${theme}-fg/80`}>
+            {timeLeft}
+          </span>
+
           <div
             className={clsx(
-              `pointer-events-none fixed inset-0 z-30 h-screen w-screen bg-${theme}-bg transition-opacity duration-200`,
-              { "opacity-0": !isFocused }
+              "relative z-40 h-[140px] w-full text-2xl outline-none"
             )}
-          ></div>
-        )}
-        <span className={`absolute left-0 -top-[3.25rem] z-40 text-4xl text-${theme}-fg/80`}>
-          {timeLeft}
-        </span>
-
-        <div
-          className={clsx(
-            "relative z-40 h-[140px] w-full text-2xl outline-none"
-          )}
-          onClick={() => {
-            if (ref !== null && typeof ref !== "function") {
-              ref?.current?.focus();
-            }
-            setIsFocused(true);
-          }}
-        >
-          <input
-            type="text"
-            className="absolute left-0 top-0 z-20 h-full w-full cursor-default opacity-0"
-            tabIndex={1}
-            ref={ref}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            value={value}
-            onChange={(e) => {
-              const newValue = e.target.value;
-              if (value.length > newValue.length) {
-                handleKeyDown("Backspace", false);
-              } else {
-                const newChar = newValue.slice(-1);
-                if (newChar.length === 1) {
-                  handleKeyDown(newChar, false);
+            onClick={() => {
+              if (ref !== null && typeof ref !== "function") {
+                ref?.current?.focus();
+              }
+              setIsFocused(true);
+            }}
+          >
+            <input
+              type="text"
+              className="absolute left-0 top-0 z-20 h-full w-full cursor-default opacity-0"
+              tabIndex={1}
+              ref={ref}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              value={value}
+              onChange={(e) => {
+                const newValue = e.target.value;
+                if (value.length > newValue.length) {
+                  handleKeyDown("Backspace", false);
+                } else {
+                  const newChar = newValue.slice(-1);
+                  if (newChar.length === 1) {
+                    handleKeyDown(newChar, false);
+                  }
                 }
-              }
-              setValue(newValue);
-            }}
-            onKeyDown={(e) => {
-              if (isOpen) {
-                setIsFocused(false);
-                return;
-              }
-              if (e.ctrlKey) return;
-              if (
-                ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(
-                  e.key
+                setValue(newValue);
+              }}
+              onKeyDown={(e) => {
+                if (isOpen) {
+                  setIsFocused(false);
+                  return;
+                }
+                if (e.ctrlKey) return;
+                if (
+                  ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(
+                    e.key
+                  )
                 )
-              )
-                e.preventDefault();
-            }}
-          />
-          {/* Cursor indicator */}
-          {isFocused && phase !== 2 && (
-            <div
-              className={`absolute z-20 h-6 pt-1 w-[2px] bg-${theme}-hl transition-all duration-150 ease-in-out`}
-              style={{
-                left: `${pos.left}px`,
-                top: `${pos.top}px`,
-                backgroundColor: `var(--color-${theme}-hl)`,
-                animation: 'cursor-blink 1.2s ease-in-out infinite',
+                  e.preventDefault();
               }}
             />
-          )}
+            {isFocused && phase !== 2 && (
+              <div
+                className={`absolute z-20 h-6 pt-1 w-[2px] bg-${theme}-hl transition-all duration-150 ease-in-out`}
+                style={{
+                  left: `${pos.left}px`,
+                  top: `${pos.top}px`,
+                  backgroundColor: `var(--color-${theme}-hl)`,
+                  animation: 'cursor-blink 1.2s ease-in-out infinite',
+                }}
+              />
+            )}
 
-          {/* End flag indicator */}
-          {phase === 2 && isFocused && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div
-                  className={`absolute z-5 h-6 pt-1 w-[2px] flex items-center justify-center`}
-                  style={{
-                    left: `${pos.left}px`,
-                    top: `${pos.top}px`,
-                  }}
-                >
-                  <Iconify
-                    icon="mdi:flag"
-                    className={`text-${theme}-hl text-lg`}
-                  />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>ended here</p>
-              </TooltipContent>
-            </Tooltip>
-          )}
-
-          <div
-            className={clsx(
-              "absolute -top-4 z-10 h-4 w-full bg-gradient-to-b from-bg transition-all duration-200",
-              { "opacity-0": !isFocused }
-            )}
-          ></div>
-          <div
-            className={clsx(
-              "absolute -bottom-1 z-10 h-8 w-full bg-gradient-to-t from-bg transition-all duration-200",
-              { "opacity-0": !isFocused }
-            )}
-          ></div>
-          <span
-            className={clsx(
-              "absolute z-20 flex h-full w-full cursor-default items-center justify-center text-base opacity-0 transition-all duration-200",
-              { [`text-${theme}-fg opacity-100`]: !isFocused }
-            )}
-          >
-            Click
-            <Iconify icon="mdi:cursor-default-click" />
-            or press any key to focus
-          </span>
-          <div
-            className={clsx(
-              "absolute top-0 left-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-wide transition-all duration-200",
-              { "opacity-40 blur-[8px]": !isFocused }
-            )}
-          >
-            <div
-              ref={letterElements}
-              style={
-                margin > 0
-                  ? {
-                    marginTop: -(margin * 39),
-                  }
-                  : {
-                    marginTop: 0,
-                  }
-              }
-            >
-              {text.split("").map((letter, index) => {
-                const state = charsState[index];
-                const color =
-                  state === 0
-                    ? `text-${fontFamily}-font`
-                    : state === 1
-                      ? `text-${theme}-fg`
-                      : `text-${theme}-hl border-b-2 border-${theme}-hl`;
-                return (
-                  <span
-                    key={letter + index}
-                    className={`${color} transition-all duration-150 ease-in-out`}
+            {phase === 2 && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div
+                    className={`absolute z-30 flex cursor-pointer items-center justify-center rounded-full bg-${theme}-hl text-${theme}-bg transition-all duration-200 hover:scale-110`}
+                    style={{
+                      left: `${pos.left}px`,
+                      top: `${pos.top}px`,
+                    }}
                   >
-                    {letter}
-                  </span>
-                );
-              })}
+                    <Iconify icon="mdi:flag" className="h-4 w-4" />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent 
+                  className="z-[60] bg-primary text-primary-foreground"
+                  side="top"
+                  sideOffset={8}
+                >
+                  <p>Typing ended here</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+
+            <div
+              className={clsx(
+                "absolute -top-4 z-10 h-4 w-full bg-gradient-to-b from-bg transition-all duration-200",
+                { "opacity-0": !isFocused }
+              )}
+            ></div>
+            <div
+              className={clsx(
+                "absolute -bottom-1 z-10 h-8 w-full bg-gradient-to-t from-bg transition-all duration-200",
+                { "opacity-0": !isFocused }
+              )}
+            ></div>
+            <span
+              className={clsx(
+                "absolute z-20 flex h-full w-full cursor-default items-center justify-center text-base opacity-0 transition-all duration-200",
+                { [`text-${theme}-fg opacity-100`]: !isFocused }
+              )}
+            >
+              Click
+              <Iconify icon="mdi:cursor-default-click" />
+              or press any key to focus
+            </span>
+            <div
+              className={clsx(
+                "absolute top-0 left-0 mb-4 h-full w-full overflow-hidden text-justify leading-relaxed tracking-wide transition-all duration-200",
+                { "opacity-40 blur-[8px]": !isFocused }
+              )}
+            >
+              <div
+                ref={letterElements}
+                style={
+                  margin > 0
+                    ? {
+                      marginTop: -(margin * 39),
+                    }
+                    : {
+                      marginTop: 0,
+                    }
+                }
+              >
+                {text.split("").map((letter, index) => {
+                  const state = charsState[index];
+                  const color =
+                    state === 0
+                      ? `text-${fontFamily}-font`
+                      : state === 1
+                        ? `text-${theme}-fg`
+                        : `text-${theme}-hl border-b-2 border-${theme}-hl`;
+                  return (
+                    <span
+                      key={letter + index}
+                      className={`${color} transition-all duration-150 ease-in-out`}
+                    >
+                      {letter}
+                    </span>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="relative z-40 mt-4 flex w-full flex-col flex-wrap items-center justify-center gap-4 text-sm">
-          {phase === 2 && startTime && endTime ? (
-            <div className="grid grid-rows-3 items-center gap-4 rounded-lg px-4 py-1 text-xl font-bold sm:flex">
-              <span className="text-4xl">
-                {Math.round(((60 / duration) * correctChar) / 5)}
-                <span className="text-base">WPM</span>
-              </span>{" "}
-              <span className="text-4xl">
-                {duration}
-                <span className="text-2xl">s</span>
-              </span>
-              <span className="relative text-4xl">
-                {(((correctChar - errorChar) / (currIndex + 1)) * 100).toFixed(
-                  2
-                )}
-                %
-                <span className="absolute -bottom-4 right-1 text-sm">
-                  ACCURACY
+          <div className="relative z-40 mt-4 flex w-full flex-col flex-wrap items-center justify-center gap-4 text-sm">
+            {phase === 2 && startTime && endTime ? (
+              <div className="grid grid-rows-3 items-center gap-4 rounded-lg px-4 py-1 text-xl font-bold sm:flex">
+                <span className="text-4xl">
+                  {Math.round(((60 / duration) * correctChar) / 5)}
+                  <span className="text-base">WPM</span>
+                </span>{" "}
+                <span className="text-4xl">
+                  {duration}
+                  <span className="text-2xl">s</span>
                 </span>
-              </span>
-            </div>
-          ) : null}
-          <div className="flex gap-4"></div>
+                <span className="relative text-4xl">
+                  {(((correctChar - errorChar) / (currIndex + 1)) * 100).toFixed(
+                    2
+                  )}
+                  %
+                  <span className="absolute -bottom-4 right-1 text-sm">
+                    ACCURACY
+                  </span>
+                </span>
+              </div>
+            ) : null}
+            <div className="flex gap-4"></div>
+          </div>
         </div>
-      </div>
+      </TooltipProvider>
     );
   }
 );
