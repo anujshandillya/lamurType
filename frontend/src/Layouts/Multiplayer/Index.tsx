@@ -103,10 +103,14 @@ export default function MultiplayerPage() {
               <Iconify icon="mdi:team" className='self-center text-[5rem] text-fg' />
               <h1 className='mb-2'>multiplayer mode</h1>
               <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-                <RHFTextField name='code' label='Room Code' />
-                <Button type='submit' disabled={isJoiningRoom}>
+                <div className='flex gap-2 w-full'>
+
+                <RHFTextField name='code' label='Room Code' fullWidth={true} />
+                <Button type='submit' disabled={isJoiningRoom} className='flex gap-1 items-center'>
+              <span className='text-sm font-bold'>Go</span>
                   <Iconify icon="mdi:arrow-right" className='text-bg' />
                 </Button>
+                </div>
               </FormProvider>
 
               <span className='mb-4 text-3xl font-bold'>or</span>
@@ -116,8 +120,8 @@ export default function MultiplayerPage() {
                     dispatch({ type: 'SET_MODE', payload: 'words' })
                   }
                   className={clsx(
-                    'rounded-lg px-2 py-1 transition-colors duration-200',
-                    [mode === 'words' ? 'text-hl ring-2 ring-fg' : 'text-hl']
+                    "flex items-center gap-2",
+                    mode !== 'words' && "bg-hl text-bg font-semibold hover:bg-hl"
                   )}
                 >
                   words
@@ -127,12 +131,8 @@ export default function MultiplayerPage() {
                     dispatch({ type: 'SET_MODE', payload: 'sentences' })
                   }
                   className={clsx(
-                    'rounded-lg px-2 py-1 transition-colors duration-200',
-                    [
-                      mode === 'sentences'
-                        ? 'text-hl ring-2 ring-fg'
-                        : 'text-hl',
-                    ]
+                    "flex items-center gap-2",
+                    mode !== 'sentences' && "bg-hl text-bg font-semibold hover:bg-hl"
                   )}
                 >
                   sentences
@@ -142,8 +142,8 @@ export default function MultiplayerPage() {
                     dispatch({ type: 'SET_MODE', payload: 'numbers' })
                   }
                   className={clsx(
-                    'rounded-lg px-2 py-1 transition-colors duration-200',
-                    [mode === 'numbers' ? 'text-hl ring-2 ring-fg' : 'text-hl']
+                    "flex items-center gap-2",
+                    mode !== 'numbers' && "bg-hl text-bg font-semibold hover:bg-hl"
                   )}
                 >
                   numbers

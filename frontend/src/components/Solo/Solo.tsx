@@ -48,11 +48,11 @@ export default function Solo() {
         }}
         ref={buttonRef}
         tabIndex={2}
-        className={`group relative z-40 mt-2 flex items-center rounded-lg border-0 px-4 py-2 text-${theme}-fg/50 outline-none transition-colors duration-200 hover:text-${theme}-fg focus:bg-hl focus:text-bg active:bg-hl active:text-bg`}
+        className="flex items-center gap-2"
       >
         <Tooltip>
             <TooltipTrigger>
-        <Iconify icon="mdi:restart" className='text-2xl' />
+        <Iconify icon="mdi:restart" />
 
             </TooltipTrigger>
             <TooltipContent className='top-12 font-primary group-hover:translate-y-0 group-hover:opacity-100 group-focus:top-14 group-focus:translate-y-0 group-focus:opacity-100 group-active:top-14 group-active:translate-y-0 group-active:opacity-100'>

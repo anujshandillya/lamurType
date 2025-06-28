@@ -14,8 +14,6 @@ export default function Players({theme}: {theme: string}) {
     },
   } = useRoomContext();
 
-  console.log("players:",players);
-
   return (
     <div
       className={clsx(

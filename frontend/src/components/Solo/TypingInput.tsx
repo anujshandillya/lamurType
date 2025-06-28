@@ -2,9 +2,15 @@ import { usePreferenceContext } from "@/context/Preference/PreferenceContext";
 import useLeaderboard from "@/hooks/use-leaderboard";
 import useProfile from "@/hooks/use-profile";
 import clsx from "clsx";
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import useTyping from "react-typing-game-hook";
 import Iconify from "../Iconify";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type TypingInputProps = {
   text: string;
@@ -37,7 +43,7 @@ const TypingInput = forwardRef<HTMLInputElement, TypingInputProps>(
         endTime,
       },
       actions: { insertTyping, deleteTyping, resetTyping, endTyping },
-    } = useTyping(text, { 
+    } = useTyping(text, {
       skipCurrentWordOnSpace: false,
       pauseOnError: false,
       countErrors: "everytime"
@@ -45,6 +51,46 @@ const TypingInput = forwardRef<HTMLInputElement, TypingInputProps>(
 
     const [margin, setMargin] = useState(0);
     const [value, setValue] = useState("");
+
+    const pos = useMemo(() => {
+      if (currIndex !== -1 && letterElements.current) {
+        // Use currIndex + 1 to position cursor at the next character position
+        const nextIndex = currIndex + 1;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const spanref: any = letterElements.current.children[nextIndex];
+        if (!spanref) {
+          // If we're at the end of the text, position after the last character
+          const lastSpan: any = letterElements.current.children[currIndex];
+          if (lastSpan) {
+            const left = lastSpan.offsetLeft + lastSpan.offsetWidth;
+            const top = lastSpan.offsetTop - 2;
+            const adjustedTop = top + (margin * 39);
+            return { left, top: adjustedTop };
+          }
+          return { left: -2, top: 2 };
+        }
+
+        const left = spanref.offsetLeft;
+        const top = spanref.offsetTop - 2;
+
+        // Account for the margin offset when calculating position
+        const adjustedTop = top + (margin * 39);
+
+        if (adjustedTop > 60) {
+          setMargin((prevMargin) => prevMargin + 1);
+          return {
+            left,
+            top: adjustedTop / 2,
+          };
+        }
+        return { left, top: adjustedTop };
+      } else {
+        return {
+          left: -2,
+          top: 2,
+        };
+      }
+    }, [currIndex, margin]);
 
     useEffect(() => {
       setValue("");
@@ -98,9 +144,12 @@ const TypingInput = forwardRef<HTMLInputElement, TypingInputProps>(
       if (letter === "Backspace") {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const spanref: any = letterElements?.current?.children[currIndex];
-        const top = spanref?.offsetTop - 2;
+        if (!spanref) return;
 
-        if (top < 0) {
+        const top = spanref.offsetTop - 2;
+        const adjustedTop = top + (margin * 39);
+
+        if (adjustedTop < 0) {
           return;
         }
         deleteTyping(control);
@@ -168,6 +217,42 @@ const TypingInput = forwardRef<HTMLInputElement, TypingInputProps>(
                 e.preventDefault();
             }}
           />
+          {/* Cursor indicator */}
+          {isFocused && phase !== 2 && (
+            <div
+              className={`absolute z-20 h-6 pt-1 w-[2px] bg-${theme}-hl transition-all duration-150 ease-in-out`}
+              style={{
+                left: `${pos.left}px`,
+                top: `${pos.top}px`,
+                backgroundColor: `var(--color-${theme}-hl)`,
+                animation: 'cursor-blink 1.2s ease-in-out infinite',
+              }}
+            />
+          )}
+
+          {/* End flag indicator */}
+          {phase === 2 && isFocused && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div
+                  className={`absolute z-5 h-6 pt-1 w-[2px] flex items-center justify-center`}
+                  style={{
+                    left: `${pos.left}px`,
+                    top: `${pos.top}px`,
+                  }}
+                >
+                  <Iconify
+                    icon="mdi:flag"
+                    className={`text-${theme}-hl text-lg`}
+                  />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>ended here</p>
+              </TooltipContent>
+            </Tooltip>
+          )}
+
           <div
             className={clsx(
               "absolute -top-4 z-10 h-4 w-full bg-gradient-to-b from-bg transition-all duration-200",
@@ -201,11 +286,11 @@ const TypingInput = forwardRef<HTMLInputElement, TypingInputProps>(
               style={
                 margin > 0
                   ? {
-                      marginTop: -(margin * 39),
-                    }
+                    marginTop: -(margin * 39),
+                  }
                   : {
-                      marginTop: 0,
-                    }
+                    marginTop: 0,
+                  }
               }
             >
               {text.split("").map((letter, index) => {
@@ -214,15 +299,12 @@ const TypingInput = forwardRef<HTMLInputElement, TypingInputProps>(
                   state === 0
                     ? `text-${fontFamily}-font`
                     : state === 1
-                    ? `text-${theme}-fg`
-                    : `text-${theme}-hl border-b-2 border-${theme}-hl`;
+                      ? `text-${theme}-fg`
+                      : `text-${theme}-hl border-b-2 border-${theme}-hl`;
                 return (
                   <span
                     key={letter + index}
-                    className={`${color} transition-all duration-150 ease-in-out ${
-                      currIndex+1 === index &&
-                      `border-b-2 border-${theme}-hl`
-                    }`}
+                    className={`${color} transition-all duration-150 ease-in-out`}
                   >
                     {letter}
                   </span>

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import useTyping from 'react-typing-game-hook';
 
 import { usePreferenceContext } from '@/context/Preference/PreferenceContext';
@@ -9,6 +9,12 @@ import Players from './Players';
 import Code from './RoomCode';
 // import ChatBox from '../ChatBox/ChatBox';
 import Iconify from '../Iconify';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type TypingInputProps = React.ComponentPropsWithRef<'input'> & {
   theme: string;
@@ -75,6 +81,33 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
 
     const [margin, setMargin] = useState(() => 0);
     const [value, setValue] = useState(() => '');
+
+    const pos = useMemo(() => {
+      if (text.length !== 0 && currIndex + 1 === text.length) {
+        dispatch({ type: 'SET_IS_FINISHED', payload: true });
+      }
+      if (currIndex !== -1 && letterElements.current) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const spanref: any = letterElements.current.children[currIndex];
+
+        const left = spanref.offsetLeft + spanref.offsetWidth - 2;
+        const top = spanref.offsetTop - 2;
+        if (top > 60) {
+          setMargin((margin) => margin + 1);
+          return {
+            left,
+            top: top / 2,
+          };
+        }
+        return { left, top };
+      } else {
+        return {
+          left: -2,
+          top: 2,
+        };
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currIndex, text.length]);
 
     useEffect(() => {
       if (id && roomId) {
@@ -210,6 +243,16 @@ const TypingInput = React.forwardRef<HTMLInputElement, TypingInputProps>(
                   e.preventDefault();
               }}
             />
+            {/* Cursor indicator */}
+            {isFocused && isPlaying && (
+              <div
+                className={`absolute z-30 h-6 w-0.5 bg-${theme}-hl transition-all duration-150 ease-in-out`}
+                style={{
+                  left: `${pos.left}px`,
+                  top: `${pos.top}px`,
+                }}
+              />
+            )}
             <div
               className={clsx(
                 'absolute -top-4 z-10 h-4 w-full bg-gradient-to-b from-bg transition-all duration-200',

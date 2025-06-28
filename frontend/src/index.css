@@ -171,3 +171,13 @@
 .text-eyepain-font { color: var(--color-eyepain-font); }
 .text-eyepain-hl { color: var(--color-eyepain-hl); }
 .text-eyepain-fg { color: var(--color-eyepain-fg); }
+
+/* Cursor blinking animation */
+@keyframes cursor-blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
