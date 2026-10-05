@@ -18,77 +18,77 @@
   --color-primary: var(--shadcn-font);
   --color-primary-foreground: var(--shadcn-bg);
   --color-secondary: var(--shadcn-hl);
-  --color-secondary-foreground: var(--shadcn-font);
+  --color-secondary-foreground: var(--shadcn-bg);
   --color-muted: var(--shadcn-bg);
   --color-muted-foreground: var(--shadcn-hl);
   --color-accent: var(--shadcn-fg);
-  --color-accent-foreground: var(--shadcn-font);
+  --color-accent-foreground: var(--shadcn-bg);
   --color-destructive: var(--shadcn-fg);
-  --color-destructive-foreground: var(--shadcn-hl);
+  --color-destructive-foreground: var(--shadcn-bg);
   --color-border: var(--shadcn-hl);
   --color-input: var(--shadcn-bg);
   --color-ring: var(--shadcn-font);
   --radius: 0.5rem;
 
-  --color-plain-bg: oklch(0.933 0.001 0);
-  --color-plain-font: oklch(0.533 0.008 197.6);
-  --color-plain-hl: oklch(0.371 0.006 314.75);
-  --color-plain-fg: oklch(0.5853 0.2269 21);
-  
-  --color-winter-bg: oklch(0.525 0.109 237.66);
-  --color-winter-font: oklch(0.857 0.025 220.5);
-  --color-winter-hl: oklch(0.925 0.025 180.2);
-  --color-winter-fg: oklch(0.8207 0.0908 176.87);
+  --color-plain-bg: oklch(0.9584 0.0029 84.56);
+  --color-plain-font: oklch(0.4310 0.0102 236.78);
+  --color-plain-hl: oklch(0.5131 0.0088 228.98);
+  --color-plain-fg: oklch(0.5111 0.1332 28.39);
 
-  --color-snowynight-bg: oklch(0.201 0.008 180.2);
-  --color-snowynight-font: oklch(0.371 0.025 180.2);
-  --color-snowynight-hl: oklch(0.801 0.025 180.2);
-  --color-snowynight-fg: oklch(0.961 0.005 180.2);
+  --color-winter-bg: oklch(0.3360 0.0559 236.69);
+  --color-winter-font: oklch(0.9112 0.0228 229.10);
+  --color-winter-hl: oklch(0.8111 0.0521 218.41);
+  --color-winter-fg: oklch(0.8652 0.0637 179.83);
 
-  --color-vintage-bg: oklch(0.481 0.075 160.5);
-  --color-vintage-font: oklch(0.701 0.045 140.2);
-  --color-vintage-hl: oklch(0.925 0.015 85.3);
-  --color-vintage-fg: oklch(0.861 0.025 85.3);
+  --color-snowynight-bg: oklch(0.2319 0.0230 238.23);
+  --color-snowynight-font: oklch(0.8623 0.0206 238.71);
+  --color-snowynight-hl: oklch(0.7382 0.0478 233.32);
+  --color-snowynight-fg: oklch(0.8508 0.0645 217.54);
 
-  --color-vampire-bg: oklch(0.113 0 0);
-  --color-vampire-font: oklch(0.301 0 0);
-  --color-vampire-hl: oklch(0.785 0 0);
-  --color-vampire-fg: oklch(0.481 0.175 25.5);
+  --color-vintage-bg: oklch(0.3652 0.0431 174.76);
+  --color-vintage-font: oklch(0.8981 0.0202 100.61);
+  --color-vintage-hl: oklch(0.8168 0.0385 134.14);
+  --color-vintage-fg: oklch(0.8672 0.0719 70.76);
 
-  --color-bubblegum-bg: oklch(0.321 0.075 280.5);
-  --color-bubblegum-font: oklch(0.761 0.045 300.2);
-  --color-bubblegum-hl: oklch(0.881 0.025 340.2);
-  --color-bubblegum-fg: oklch(0.901 0.125 140.2);
+  --color-vampire-bg: oklch(0.1924 0.0076 346.14);
+  --color-vampire-font: oklch(0.8471 0.0149 350.16);
+  --color-vampire-hl: oklch(0.6919 0.0367 352.49);
+  --color-vampire-fg: oklch(0.7205 0.1451 13.97);
 
-  --color-greentea-bg: oklch(0.481 0.075 140.2);
-  --color-greentea-font: oklch(0.761 0.045 120.2);
-  --color-greentea-hl: oklch(0.961 0.025 120.2);
-  --color-greentea-fg: oklch(0.901 0.085 100.2);
+  --color-bubblegum-bg: oklch(0.2881 0.0613 294.42);
+  --color-bubblegum-font: oklch(0.8987 0.0373 312.05);
+  --color-bubblegum-hl: oklch(0.7772 0.0812 315.88);
+  --color-bubblegum-fg: oklch(0.8070 0.0985 348.12);
 
-  --color-wood-bg: oklch(0.261 0.015 60.2);
-  --color-wood-font: oklch(0.371 0.015 60.2);
-  --color-wood-hl: oklch(0.801 0.015 60.2);
-  --color-wood-fg: oklch(0.601 0.025 60.2);
+  --color-greentea-bg: oklch(0.9527 0.0267 116.09);
+  --color-greentea-font: oklch(0.3957 0.0428 136.33);
+  --color-greentea-hl: oklch(0.4873 0.0573 122.01);
+  --color-greentea-fg: oklch(0.4989 0.0906 125.98);
 
-  --color-beach-bg: oklch(0.481 0.175 220.5);
-  --color-beach-font: oklch(0.681 0.125 220.5);
-  --color-beach-hl: oklch(0.961 0.005 0);
-  --color-beach-fg: oklch(0.841 0.125 85.3);
+  --color-wood-bg: oklch(0.2661 0.0178 48.03);
+  --color-wood-font: oklch(0.8741 0.0256 69.40);
+  --color-wood-hl: oklch(0.7185 0.0547 66.77);
+  --color-wood-fg: oklch(0.7841 0.0781 68.84);
 
-  --color-halloween-bg: oklch(0.081 0.005 60.2);
-  --color-halloween-font: oklch(0.281 0.015 300.2);
-  --color-halloween-hl: oklch(0.785 0 0);
-  --color-halloween-fg: oklch(0.641 0.175 45.2);
-  
-  --color-botanical-bg: oklch(0.521 0.075 140.2);
-  --color-botanical-font: oklch(0.641 0.045 140.2);
-  --color-botanical-hl: oklch(0.881 0.085 120.2);
-  --color-botanical-fg: oklch(0.941 0.005 85.3);
+  --color-beach-bg: oklch(0.3443 0.0543 230.75);
+  --color-beach-font: oklch(0.9240 0.0227 217.64);
+  --color-beach-hl: oklch(0.8113 0.0442 216.80);
+  --color-beach-fg: oklch(0.8736 0.0925 84.40);
 
-  --color-eyepain-bg: oklch(0.281 0.275 280.5);
-  --color-eyepain-font: oklch(0.761 0.275 120.2);
-  --color-eyepain-hl: oklch(0.481 0.275 25.5);
-  --color-eyepain-fg: oklch(0.481 0.275 320.5);
+  --color-halloween-bg: oklch(0.2184 0.0211 322.62);
+  --color-halloween-font: oklch(0.8836 0.0205 330.68);
+  --color-halloween-hl: oklch(0.7398 0.0633 321.76);
+  --color-halloween-fg: oklch(0.7997 0.1383 58.62);
+
+  --color-botanical-bg: oklch(0.3374 0.0405 164.96);
+  --color-botanical-font: oklch(0.9031 0.0217 143.21);
+  --color-botanical-hl: oklch(0.7902 0.0683 135.04);
+  --color-botanical-fg: oklch(0.8577 0.0556 58.03);
+
+  --color-eyepain-bg: oklch(0.2409 0.0784 294.83);
+  --color-eyepain-font: oklch(0.9178 0.0454 297.97);
+  --color-eyepain-hl: oklch(0.8263 0.1138 308.36);
+  --color-eyepain-fg: oklch(0.8811 0.1732 128.20);
 }
 
 /* Default shadcn theme values (will be updated by JavaScript) */
@@ -107,11 +107,6 @@
 .font-georgia { font-family: var(--font-georgia); }
 
 /* Theme utility classes */
-.bg-default-bg { background-color: oklch(0.9491 0 0); }
-.text-default-font { color: oklch(0.5566 0.0945 197.6); }
-.text-default-hl { color: oklch(0.3707 0.0057 314.75); }
-.text-default-fg { color: oklch(0.4128 0 0); }
-
 .bg-plain-bg { background-color: var(--color-plain-bg); }
 .text-plain-font { color: var(--color-plain-font); }
 .text-plain-hl { color: var(--color-plain-hl); }
