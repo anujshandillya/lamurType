@@ -14,7 +14,7 @@ export default function UserAuthProvider({children}: {children: React.ReactNode}
     })
 
     useEffect(() => {
-        if(typeof window !== undefined) {
+        if(typeof window !== 'undefined') {
             const user = window.localStorage.getItem('user') || null;
 
             if(user) dispatch({ type: 'SET_USER', payload: JSON.parse(user) });

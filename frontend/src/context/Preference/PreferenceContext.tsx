@@ -28,8 +28,8 @@ export default function PreferenceProvider({ children }: { children: React.React
     })
 
     useEffect(() => {
-        if(typeof window !== undefined) {
-            const theme = window.localStorage.getItem('theme') || 'default';
+        if(typeof window !== 'undefined') {
+            const theme = window.localStorage.getItem('theme') || 'plain';
             const fontFamily = window.localStorage.getItem('fontFamily') || 'poppins';
             const type = window.localStorage.getItem('type') || 'words';
             const time = window.localStorage.getItem('time') || '15';
