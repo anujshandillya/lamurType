@@ -17,9 +17,6 @@ main
 # Dependency directories (if you're using vendoring)
 /vendor/
 
-# Go modules
-go.sum
-
 # IDEs and editors
 .vscode/
 .idea/
